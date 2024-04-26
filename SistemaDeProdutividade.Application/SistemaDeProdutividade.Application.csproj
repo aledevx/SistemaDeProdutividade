@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SistemaDeProdutividade.Communication\SistemaDeProdutividade.Communication.csproj" />
+    <ProjectReference Include="..\SistemaDeProdutividade.Domain\SistemaDeProdutividade.Domain.csproj" />
+    <ProjectReference Include="..\SistemaDeProdutividade.Exception\SistemaDeProdutividade.Exception.csproj" />
+  </ItemGroup>
+
+</Project>
