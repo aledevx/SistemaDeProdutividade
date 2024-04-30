@@ -14,4 +14,5 @@ public class Usuario
     public string Matricula { get; set; } = string.Empty;
     public string Cpf { get; set; } = string.Empty;
     public required Perfil Perfil { get; set; }
+    public IList<ProdutividadeFeita> Produtividades { get; set; } = [];
 }

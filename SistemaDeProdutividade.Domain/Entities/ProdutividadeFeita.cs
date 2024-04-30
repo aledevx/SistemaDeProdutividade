@@ -18,8 +18,8 @@ public class ProdutividadeFeita
     public DateTime DataInicio { get; }
     public DateTime DataFim { get; }
     public StatusProdutividade Status { get; set; } = StatusProdutividade.Criada;
-    [NotMapped]
-    public Guid UsuarioId { get; private set; }
+    public Guid UsuarioId { get; set; }
+    public Usuario? Usuario { get; set; }
     public DateTime DataCriacao { get; set; } = DateTime.Now;
     public bool Ativo { get; set; } = true;
     public bool FaltasNaoJustificadas { get; set; } = false;

@@ -2,9 +2,9 @@
 public class Lotacao
 {
     public Guid Id { get; set; }
-    public Guid? UsuarioId { get; private set; }
-    public Guid SetorId { get; private set; }
-    public Guid CargoId { get; private set; }
+    public Guid UsuarioId { get; set; }
+    public Guid SetorId { get; set; }
+    public Guid CargoId { get; set; }
     public DateTime DataLotacao { get; set; } = DateTime.Now;
-    public Guid UsuarioQueLotouId { get; private set; }
+    public Guid UsuarioQueLotouId { get; set; }
 }

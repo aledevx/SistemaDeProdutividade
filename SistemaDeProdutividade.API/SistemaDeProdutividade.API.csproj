@@ -7,6 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="appsettings.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
@@ -14,10 +22,17 @@
     <ProjectReference Include="..\SistemaDeProdutividade.Application\SistemaDeProdutividade.Application.csproj" />
     <ProjectReference Include="..\SistemaDeProdutividade.Communication\SistemaDeProdutividade.Communication.csproj" />
     <ProjectReference Include="..\SistemaDeProdutividade.Exception\SistemaDeProdutividade.Exception.csproj" />
+    <ProjectReference Include="..\SistemaDeProdutividade.Infrastructure\SistemaDeProdutividade.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Controllers\" />
   </ItemGroup>
+
+  <ItemGroup>
+    <None Include="appsettings.json" />
+  </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1development_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
 
 </Project>
