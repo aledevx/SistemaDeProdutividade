@@ -7,13 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SistemaDeProdutividade.Communication\SistemaDeProdutividade.Communication.csproj" />
-    <ProjectReference Include="..\SistemaDeProdutividade.Domain\SistemaDeProdutividade.Domain.csproj" />
-    <ProjectReference Include="..\SistemaDeProdutividade.Exception\SistemaDeProdutividade.Exception.csproj" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="UseCases\" />
+    <ProjectReference Include="..\SistemaDeProdutividade.Communication\SistemaDeProdutividade.Communication.csproj" />
+    <ProjectReference Include="..\SistemaDeProdutividade.Domain\SistemaDeProdutividade.Domain.csproj" />
+    <ProjectReference Include="..\SistemaDeProdutividade.Exception\SistemaDeProdutividade.Exception.csproj" />
   </ItemGroup>
 
 </Project>
