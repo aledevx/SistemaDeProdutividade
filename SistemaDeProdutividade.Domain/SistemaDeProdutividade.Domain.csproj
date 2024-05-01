@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Contracts\" />
+    <ProjectReference Include="..\SistemaDeProdutividade.Communication\SistemaDeProdutividade.Communication.csproj" />
   </ItemGroup>
 
 </Project>
