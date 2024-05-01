@@ -69,6 +69,7 @@ public class ProdContext : DbContext
         builder.Entity<ProdutividadeFeita>().HasOne(p => p.Usuario).WithMany(u => u.Produtividades);
         builder.Entity<ProdutividadeFeita>().Property(p => p.UsuarioId).IsRequired();
         builder.Entity<ProdutividadeFeita>().Property(p => p.DataCriacao).IsRequired();
+        builder.Entity<ProdutividadeFeita>().Property(p => p.Status).HasConversion(v => v.ToString(), v => (StatusProdutividade)Enum.Parse(typeof(StatusProdutividade), v)).IsRequired();
         builder.Entity<ProdutividadeFeita>().Property(p => p.Ativo).IsRequired();
         builder.Entity<ProdutividadeFeita>().Property(p => p.FaltasNaoJustificadas).IsRequired();
         builder.Entity<ProdutividadeFeita>().Property(p => p.SemAssinaturaServidor).IsRequired();
@@ -118,7 +119,7 @@ public class ProdContext : DbContext
         builder.Entity<Usuario>().Property(u => u.Nome).IsUnicode(false).HasMaxLength(250).IsRequired();
         builder.Entity<Usuario>().Property(u => u.Matricula).IsUnicode(false).HasMaxLength(20).IsRequired();
         builder.Entity<Usuario>().Property(u => u.Cpf).IsUnicode(false).HasMaxLength(20).IsRequired();
-        builder.Entity<Usuario>().Property(u => u.Perfil).HasConversion(v => v.ToString(), v => (Perfil)Enum.Parse(typeof(Perfil), v)).IsRequired();
+        builder.Entity<Usuario>().Property(u => u.Perfil).IsUnicode(false).HasMaxLength(25).IsRequired();
         builder.Entity<Usuario>().HasMany(u => u.Produtividades).WithOne(p => p.Usuario);
 
     }

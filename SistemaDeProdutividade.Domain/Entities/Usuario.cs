@@ -13,6 +13,14 @@ public class Usuario
     public string Nome { get; set; } = string.Empty;
     public string Matricula { get; set; } = string.Empty;
     public string Cpf { get; set; } = string.Empty;
-    public required Perfil Perfil { get; set; }
+    public string Perfil { get; set; } = string.Empty;
     public IList<ProdutividadeFeita> Produtividades { get; set; } = [];
+
+    public Usuario(string nome, string matricula, string cpf, string perfil)
+    {
+        Nome = nome;
+        Matricula = matricula;
+        Cpf = cpf;
+        Perfil = perfil;
+    }
 }

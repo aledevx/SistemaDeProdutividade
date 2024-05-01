@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SistemaDeProdutividade.Infrastructure.DataAccess;
 
@@ -11,9 +12,11 @@ using SistemaDeProdutividade.Infrastructure.DataAccess;
 namespace SistemaDeProdutividade.API.Migrations
 {
     [DbContext(typeof(ProdContext))]
-    partial class ProdContextModelSnapshot : ModelSnapshot
+    [Migration("20240501210920_CorrecaoNasEntidadesUsuarioEProdutividade")]
+    partial class CorrecaoNasEntidadesUsuarioEProdutividade
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
