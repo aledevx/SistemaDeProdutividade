@@ -1,6 +1,5 @@
-using Microsoft.EntityFrameworkCore;
+using SistemaDeProdutividade.Application;
 using SistemaDeProdutividade.Infrastructure;
-using SistemaDeProdutividade.Infrastructure.DataAccess;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +11,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddApplication();
 
 
 //builder.Services.AddDbContext<ProdContext>();
