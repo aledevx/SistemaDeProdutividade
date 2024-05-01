@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using SistemaDeProdutividade.Application.Services.EntityMapper;
-using SistemaDeProdutividade.Application.UseCases.Usuarios.CadastrarUsuario;
+using SistemaDeProdutividade.Application.UseCases.Usuarios.Cadastrar;
 using SistemaDeProdutividade.Domain.Contracts;
 using System;
 using System.Collections.Generic;

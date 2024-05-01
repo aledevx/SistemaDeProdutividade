@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SistemaDeProdutividade.Application.UseCases.Usuarios.CadastrarUsuario;
+namespace SistemaDeProdutividade.Application.UseCases.Usuario.Cadastrar;
 public class CadastrarUsuarioUseCase : ICadastrarUsuarioUseCase
 {
     private readonly IUsuarioReadOnlyRepository _readOnlyRepository;
@@ -35,6 +35,13 @@ public class CadastrarUsuarioUseCase : ICadastrarUsuarioUseCase
     }
     private void Validate(CadastrarUsuarioRequestJson request) 
     {
+        var validator = new CadastrarUsuarioValidator();
 
+        var result = validator.Validate(request);
+
+        if (result.IsValid == false) 
+        {
+            var errorMessages = result.Errors.Select(r => r.ErrorMessage).ToList();
+        }
     }
 }   
