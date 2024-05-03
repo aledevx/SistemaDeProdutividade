@@ -1,3 +1,4 @@
+using SistemaDeProdutividade.API.Filters;
 using SistemaDeProdutividade.Application;
 using SistemaDeProdutividade.Infrastructure;
 
@@ -13,6 +14,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddApplication();
 
+builder.Services.AddMvc(options => options.Filters.Add(typeof(ExceptionFilter)));
 
 //builder.Services.AddDbContext<ProdContext>();
 

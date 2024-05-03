@@ -2,6 +2,8 @@
 using SistemaDeProdutividade.Communication.Responses;
 using SistemaDeProdutividade.Domain.Contracts;
 using SistemaDeProdutividade.Domain.Repositories.Usuario;
+using SistemaDeProdutividade.Exception;
+using SistemaDeProdutividade.Exception.ExceptionsBase;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +26,7 @@ public class CadastrarUsuarioUseCase : ICadastrarUsuarioUseCase
     }
     public async Task<MensagemSucessoCadastroResponseJson> Execute(CadastrarUsuarioRequestJson request) 
     {
-        Validate(request);
+        await Validate(request);
 
         var user = _mappingEntity.MappingToUsuario(request);
 
@@ -33,15 +35,26 @@ public class CadastrarUsuarioUseCase : ICadastrarUsuarioUseCase
         return new MensagemSucessoCadastroResponseJson("Teste");
 
     }
-    private void Validate(CadastrarUsuarioRequestJson request) 
+    private async Task Validate(CadastrarUsuarioRequestJson request) 
     {
         var validator = new CadastrarUsuarioValidator();
 
         var result = validator.Validate(request);
 
+       var cpfExist = await _readOnlyRepository.ExisteUsuarioCpf(request.Cpf);
+
+        if (cpfExist)
+        {
+            result.Errors.Add(new FluentValidation
+                .Results
+                .ValidationFailure(string.Empty, ResourceMessagesException.CPF_ALREADY_REGISTERED));
+        }
+
         if (result.IsValid == false) 
         {
             var errorMessages = result.Errors.Select(r => r.ErrorMessage).ToList();
+
+            throw new ErrorOnValidationException(errorMessages);
         }
     }
 }   
