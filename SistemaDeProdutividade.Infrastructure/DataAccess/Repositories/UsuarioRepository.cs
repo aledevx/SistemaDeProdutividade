@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SistemaDeProdutividade.Communication.Responses;
 using SistemaDeProdutividade.Domain.Entities;
 using SistemaDeProdutividade.Domain.Repositories.Usuario;
 using System;
@@ -28,5 +29,11 @@ public class UsuarioRepository : IUsuarioWriteOnlyRepository, IUsuarioReadOnlyRe
     public async Task<bool> ExisteUsuarioMatricula(string matricula)
     {
         return await _dbContext.Usuarios.AnyAsync(u => u.Matricula.Equals(matricula));
+    }
+    public async Task<UsuarioResponseJson> BuscarUsuarioCpf(string cpf)
+    {
+        var data =await _dbContext.Usuarios.FirstAsync(u => u.Cpf.Equals(cpf));
+
+        return new UsuarioResponseJson(data.Cpf, data.Nome, data.Perfil);
     }
 }

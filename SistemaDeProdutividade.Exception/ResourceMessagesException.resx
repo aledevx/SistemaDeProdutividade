@@ -135,4 +135,10 @@
   <data name="UNKNOWN_ERROR" xml:space="preserve">
     <value>Error desconhecido.</value>
   </data>
+  <data name="USER_NOT_FOUND" xml:space="preserve">
+    <value>Esse usuário não possui cadastro no sistema.</value>
+  </data>
+  <data name="USER_UNAUTHORIZED" xml:space="preserve">
+    <value>Usuário sem autorização para executar essa ação.</value>
+  </data>
 </root>

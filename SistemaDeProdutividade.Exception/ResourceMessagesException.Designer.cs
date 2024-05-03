@@ -113,5 +113,23 @@ namespace SistemaDeProdutividade.Exception {
                 return ResourceManager.GetString("UNKNOWN_ERROR", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Esse usuário não possui cadastro no sistema..
+        /// </summary>
+        public static string USER_NOT_FOUND {
+            get {
+                return ResourceManager.GetString("USER_NOT_FOUND", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Usuário sem autorização para executar essa ação..
+        /// </summary>
+        public static string USER_UNAUTHORIZED {
+            get {
+                return ResourceManager.GetString("USER_UNAUTHORIZED", resourceCulture);
+            }
+        }
     }
 }

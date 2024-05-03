@@ -16,7 +16,11 @@ builder.Services.AddApplication();
 
 builder.Services.AddMvc(options => options.Filters.Add(typeof(ExceptionFilter)));
 
-//builder.Services.AddDbContext<ProdContext>();
+builder.Services.AddTiaIdentity().AddCookie(x =>
+{
+    //x.LoginPath = "/Autenticacao/Login";
+    //x.AccessDeniedPath = "/Home/Index";
+});
 
 var app = builder.Build();
 
@@ -27,6 +31,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseTiaIdentity();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
