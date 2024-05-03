@@ -5,4 +5,4 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace SistemaDeProdutividade.Communication.Responses;
-public record ResponseListErrorsJson(IList<string> Errors);
+public record ErrorResponseJson(string Error);
