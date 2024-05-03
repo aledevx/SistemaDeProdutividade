@@ -4,11 +4,6 @@ using SistemaDeProdutividade.Domain.Contracts;
 using SistemaDeProdutividade.Domain.Repositories.Usuario;
 using SistemaDeProdutividade.Exception;
 using SistemaDeProdutividade.Exception.ExceptionsBase;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SistemaDeProdutividade.Application.UseCases.Usuario.Cadastrar;
 public class CadastrarUsuarioUseCase : ICadastrarUsuarioUseCase
