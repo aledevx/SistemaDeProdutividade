@@ -19,6 +19,7 @@ public class UsuariosController : ControllerBase
         return Created(string.Empty, result);
     }
     [HttpPut]
+    [Route("{id}")]
     [ProducesResponseType(typeof(MensagemSucessoCadastroResponseJson), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponseJson),StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ErrorResponseJson), StatusCodes.Status404NotFound)]
@@ -27,6 +28,7 @@ public class UsuariosController : ControllerBase
         return Ok();
     }
     [HttpGet]
+    [Route("{id}")]
     [ProducesResponseType(typeof(MensagemSucessoCadastroResponseJson), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponseJson), StatusCodes.Status404NotFound)]
     public IActionResult Visualizar([FromRoute] Guid id)
