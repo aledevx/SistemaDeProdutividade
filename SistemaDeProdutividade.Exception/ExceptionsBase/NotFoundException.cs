@@ -7,4 +7,9 @@ using System.Threading.Tasks;
 namespace SistemaDeProdutividade.Exception.ExceptionsBase;
 public class NotFoundException : SistemaProdutividadeException
 {
+    public string ErrorMessage { get; set; }
+    public NotFoundException(string errorMessage)
+    {
+        ErrorMessage = errorMessage;
+    }
 }
