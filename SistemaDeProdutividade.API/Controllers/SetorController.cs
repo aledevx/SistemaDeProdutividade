@@ -1,9 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using SistemaDeProdutividade.Application.Interfaces;
-using SistemaDeProdutividade.Application.Models;
 using SistemaDeProdutividade.Communication.Requests;
+using SistemaDeProdutividade.Communication.Responses;
 using SistemaDeProdutividade.Domain.Contracts;
-using System.Threading.Tasks;
 
 namespace SistemaDeProdutividade.API.Controllers;
 [Route("api/[controller]")]
@@ -11,6 +9,8 @@ namespace SistemaDeProdutividade.API.Controllers;
 public class SetorController : ControllerBase
 {
     [HttpPost]
+    [ProducesResponseType(typeof(MensagemSucessoCadastroResponseJson), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(ListErrorsResponseJson),StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Criar([FromServices] ICriarSetorUseCase useCase, [FromBody] CriarSetorRequestJson requestJson)
     {
         var result = await useCase.Execute(requestJson);
@@ -18,25 +18,23 @@ public class SetorController : ControllerBase
         return Created(string.Empty, result);
     }    
 
-    [HttpPut("{id}")]
-    public async Task<IActionResult> Editar()
-    {
-        // Validate the input data
-        if (!ModelState.IsValid)
-            return BadRequest(ModelState);
+    // [HttpPost]
+    // public async Task<IActionResult> Editar([FromServices] IEditarSetorUseCase useCase, [FromBody] EditarSetorRequestJson requestJson)
+    // {
+    //     var result = await useCase.Execute(requestJson);
 
-        return Ok();
-    }
+    //     return Ok(result);
+    // }
 
-    [HttpGet("{id}")]
-    public async Task<IActionResult> Visualizar(int id)
-    {
-        // Call the service method to get the setor by id
-        var setor = await _setorService.GetSetorById(id);
+    // [HttpGet("{id}")]
+    // public async Task<IActionResult> Visualizar([FromServices] IVisualizarSetorUseCase useCase, Guid id)
+    // {
+    //     // Call the service method to get the setor by id
+    //     var setor = await useCase.GetSetorById(id);
 
-        if (setor == null)
-            return NotFound();
+    //     if (setor == null)
+    //         return NotFound();
 
-        return Ok(setor);
-    }
+    //     return Ok(setor);
+    // }
 }
