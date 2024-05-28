@@ -10,7 +10,7 @@ public class SetorController : ControllerBase
 {
     [HttpPost]
     [ProducesResponseType(typeof(MensagemSucessoCadastroResponseJson), StatusCodes.Status201Created)]
-    [ProducesResponseType(typeof(ListErrorsResponseJson),StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ListErrorsResponseJson), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Criar([FromServices] ICriarSetorUseCase useCase, [FromBody] CriarSetorRequestJson requestJson)
     {
         var result = await useCase.Execute(requestJson);
