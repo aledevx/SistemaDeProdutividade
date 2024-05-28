@@ -1,8 +1,9 @@
+using Microsoft.EntityFrameworkCore;
 using SistemaDeProdutividade.Domain.Entities;
 using SistemaDeProdutividade.Domain.Repositories.Setor;
 
 namespace SistemaDeProdutividade.Infrastructure.DataAccess.Repositories;
-public class SetorRepository : ISetorWriteOnlyRepository
+public class SetorRepository : ISetorWriteOnlyRepository, ISetorReadOnlyRepository
 {
     private readonly ProdContext _dbContext;
     public SetorRepository(ProdContext dbContext)
@@ -13,5 +14,9 @@ public class SetorRepository : ISetorWriteOnlyRepository
     {
         await _dbContext.Setores.AddAsync(setor);
         await _dbContext.SaveChangesAsync();
+    }
+    public async Task<Setor> GetById(int id)
+    {
+        return await _dbContext.Setores.FirstAsync(s => s.Id.Equals(id));
     }
 }
