@@ -5,4 +5,5 @@ namespace SistemaDeProdutividade.Domain.Contracts;
 public interface IRequestEntityMapperService
 {
     Usuario MappingToUsuario(CadastrarUsuarioRequestJson request);
+    Setor MappingToSetor(CriarSetorRequestJson request);
 }
