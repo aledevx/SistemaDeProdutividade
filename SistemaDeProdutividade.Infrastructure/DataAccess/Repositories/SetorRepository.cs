@@ -19,4 +19,9 @@ public class SetorRepository : ISetorWriteOnlyRepository, ISetorReadOnlyReposito
     {
         return await _dbContext.Setores.FirstAsync(s => s.Id.Equals(id));
     }
+    public async Task Editar(Setor setor)
+    {
+        _dbContext.Setores.Update(setor);
+        await _dbContext.SaveChangesAsync();
+    }
 }

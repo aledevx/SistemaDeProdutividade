@@ -2,6 +2,7 @@
 using SistemaDeProdutividade.Application.Services.AD;
 using SistemaDeProdutividade.Application.Services.EntityMapper;
 using SistemaDeProdutividade.Application.UseCases.Setor.Criar;
+using SistemaDeProdutividade.Application.UseCases.Setor.Editar;
 using SistemaDeProdutividade.Application.UseCases.Usuario.Cadastrar;
 using SistemaDeProdutividade.Application.UseCases.Usuario.Logar;
 using SistemaDeProdutividade.Domain.Contracts;
@@ -28,6 +29,7 @@ public static class DependencyInjectionExtension
     {
         services.AddScoped<ICadastrarUsuarioUseCase, CadastrarUsuarioUseCase>();
         services.AddScoped<ICriarSetorUseCase, CriarSetorUseCase>();
+        services.AddScoped<IEditarSetorUseCase, EditarSetorUseCase>();
         services.AddScoped<ILogarUsuarioUseCase, LogarUsuarioUseCase>();
     }
     private static void AddADService(IServiceCollection services)
