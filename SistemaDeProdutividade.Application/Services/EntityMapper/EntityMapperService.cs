@@ -19,4 +19,11 @@ public class EntityMapperService : IRequestEntityMapperService
 
         return setor;
     }
+    public Setor MappingToSetorEdit(EditarSetorRequestJson request)
+    {
+        var tipoSetor = (TipoSetor)Enum.Parse(typeof(TipoSetor), request.TipoSetor);
+        var setor = new Setor(request.Nome, tipoSetor, request.SetorSuperiorId, request.ChefeId, request.AssinanteResponsavelId);
+
+        return setor;
+    }
 }

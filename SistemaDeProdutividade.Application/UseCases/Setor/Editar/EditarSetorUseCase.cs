@@ -1,7 +1,10 @@
 using System;
 using System.Threading.Tasks;
+using SistemaDeProdutividade.Communication.Requests;
+using SistemaDeProdutividade.Communication.Responses;
 using SistemaDeProdutividade.Domain.Contracts;
 using SistemaDeProdutividade.Domain.Repositories.Setor;
+using SistemaDeProdutividade.Exception.ExceptionsBase;
 
 namespace SistemaDeProdutividade.Application.UseCases.Setor.Editar;
 
@@ -15,18 +18,18 @@ public class EditarSetorUseCase : IEditarSetorUseCase
         _setorWriteOnlyRepository = setorWriteOnlyRepository;
         _mappingEntity = mappingEntity;
     }
-    public async Task Execute()
+    public async Task<MensagemSucessoResponseJson> Execute(EditarSetorRequestJson request)
     {
         await Validate(request);
         
-        var setor = _mappingEntity.MappingToSetor(request);
+        var setor = _mappingEntity.MappingToSetorEdit(request);
 
         await _setorWriteOnlyRepository.Editar(setor);
 
-        return new MensagemSucessoCadastroResponseJson("Setor criado com sucesso!");
-    }
+        return new MensagemSucessoResponseJson("Setor editado com sucesso!");
+    }    
 
-    private bool Validate()
+    private async Task Validate(EditarSetorRequestJson request)
     {
         var validator = new EditarSetorValidator();
 

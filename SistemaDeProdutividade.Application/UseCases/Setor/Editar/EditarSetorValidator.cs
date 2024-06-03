@@ -1,5 +1,7 @@
 using FluentValidation;
 using SistemaDeProdutividade.Application.UseCases.Setor.Criar;
+using SistemaDeProdutividade.Communication.Requests;
+using SistemaDeProdutividade.Exception;
 
 namespace SistemaDeProdutividade.Application.UseCases.Setor.Editar
 {
@@ -7,7 +9,6 @@ namespace SistemaDeProdutividade.Application.UseCases.Setor.Editar
     {
         public EditarSetorValidator()
         {
-            // Add your validation rules here
         }
     }
 }

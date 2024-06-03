@@ -6,4 +6,5 @@ public interface IRequestEntityMapperService
 {
     Usuario MappingToUsuario(CadastrarUsuarioRequestJson request);
     Setor MappingToSetor(CriarSetorRequestJson request);
+    Setor MappingToSetorEdit(EditarSetorRequestJson request);
 }

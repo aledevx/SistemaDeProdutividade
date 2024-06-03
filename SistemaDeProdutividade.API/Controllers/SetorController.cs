@@ -18,13 +18,15 @@ public class SetorController : ControllerBase
         return Created(string.Empty, result);
     }    
 
-    // [HttpPost]
-    // public async Task<IActionResult> Editar([FromServices] IEditarSetorUseCase useCase, [FromBody] EditarSetorRequestJson requestJson)
-    // {
-    //     var result = await useCase.Execute(requestJson);
+    [HttpPost]
+    [ProducesResponseType(typeof(MensagemSucessoCadastroResponseJson), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(ListErrorsResponseJson), StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> Editar([FromServices] IEditarSetorUseCase useCase, [FromBody] EditarSetorRequestJson requestJson)
+    {
+        var result = await useCase.Execute(requestJson);
 
-    //     return Ok(result);
-    // }
+        return Ok(result);
+    }
 
     // [HttpGet("{id}")]
     // public async Task<IActionResult> Visualizar([FromServices] IVisualizarSetorUseCase useCase, Guid id)
