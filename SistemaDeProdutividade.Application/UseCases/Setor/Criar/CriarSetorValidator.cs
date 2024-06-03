@@ -9,7 +9,7 @@ namespace SistemaDeProdutividade.Application.UseCases.Setor.Criar
     {
         public CriarSetorValidator()
         {
-            RuleFor(s => s.Nome).NotEmpty().NotNull().WithMessage(ResourceMessagesException.NAME_EMPTY);;
+            RuleFor(s => s.Nome).NotEmpty().NotNull().WithMessage(ResourceMessagesException.NAME_EMPTY);
         }
     }
 }
