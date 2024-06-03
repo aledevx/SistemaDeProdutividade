@@ -28,15 +28,15 @@ public class SetorController : ControllerBase
         return Ok(result);
     }
 
-    // [HttpGet("{id}")]
-    // public async Task<IActionResult> Visualizar([FromServices] IVisualizarSetorUseCase useCase, Guid id)
-    // {
-    //     // Call the service method to get the setor by id
-    //     var setor = await useCase.GetSetorById(id);
+    [HttpGet("{id}")]
+    [ProducesResponseType(typeof(ListErrorsResponseJson), StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> Visualizar([FromServices] IVisualizarSetorUseCase useCase, Guid id)
+    {
+        var setor = await useCase.Execute(id);
 
-    //     if (setor == null)
-    //         return NotFound();
+        if (setor == null)
+            return NotFound();
 
-    //     return Ok(setor);
-    // }
+        return Ok(setor);
+    }
 }

@@ -4,5 +4,5 @@ namespace SistemaDeProdutividade.Domain.Repositories.Setor;
 
 public interface ISetorReadOnlyRepository
 {
-    Task<Entities.Setor> GetById(int id);
+    Task<Entities.Setor> BuscarSetorPorId(Guid id);
 }
