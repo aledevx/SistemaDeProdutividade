@@ -1,0 +1,123 @@
+﻿@using SistemaDeProdutividade.Web.DTOs
+@using SistemaDeProdutividade.Web.Handlers
+@inherits LayoutComponentBase
+@inject AuthHandler Handler;
+@inject NavigationManager navigationManager;
+@inject ISnackbar snackbar;
+
+<MudThemeProvider Theme="CProdTheme" />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+<MudLayout>
+    <MudAppBar Elevation="0" Dense="@dense" Style="background-color: #15599c">
+        <MudIconButton Icon="@Icons.Material.Filled.Menu" Size="Size.Large" Color="Color.Inherit" Edge="Edge.Start" OnClick="@ToggleDrawer" />
+        <MudContainer Class="d-flex align-center justify-start ml-0 gap-4">
+            <MudText Typo="Typo.h5" Style=" text-align: left;
+                                            font: normal normal bold 50px/67px Segoe UI;
+                                            letter-spacing: 0px;
+                                            color: #FCFCFC;
+                                            opacity: 1;"> <b>CPROD</b>  </MudText>
+            <MudText Style="opacity: 0.5">SERVIDOR</MudText>
+
+        </MudContainer>
+        <MudSpacer />
+        
+    </MudAppBar>
+    <MudDrawer @bind-Open="@open" ClipMode="clipMode" Breakpoint="@breakpoint" PreserveOpenState="@preserveOpenState" Elevation="1" Variant="@DrawerVariant.Mini">
+        <MudNavMenu Class="mud-width-full" Rounded="true" Margin="Margin.Dense" Color="Color.Primary">
+            <MudNavLink Disabled>
+                <MudContainer Class="">
+                    <MudText Typo="Typo.h6" Class="px-4 pt-2">@user.FirstName @user.LastName</MudText>
+                    <MudText Typo="Typo.body2" Class="px-4 mud-text-secondary">@user.Perfil</MudText>
+                </MudContainer>
+            </MudNavLink>
+            <br>
+            <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Person" Href="/home">Minhas Informações</MudNavLink>
+            <MudDivider Class="my-2" />
+            <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Man4" Href="/usuarios/inserir">Cadastrar Usuario</MudNavLink>
+            <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Group" Href="/usuarios">Usuarios Index</MudNavLink>
+            <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Man2" Href="/usuarios/cadastrar">Cadastrar Usuario</MudNavLink>
+            <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.FactCheck" Href="/base">Layoult Prod Base</MudNavLink>
+            <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.FactCheck" Href="/produtividades/cadastrar">Cadastrar Produtividade</MudNavLink>
+            <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.EditNote" Href="/produtividades/pontuar">Fazer Produtividade</MudNavLink>
+            <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.FactCheck" Href="/usuarios/perfil">Minhas Produtividades</MudNavLink>
+            <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.DriveFileRenameOutline" Href="/">Assinar Produtividades</MudNavLink>
+            <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.LibraryBooks" Href="/">Avaliar Produtividades</MudNavLink>
+            <MudDivider Class="my-2" />
+            <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Logout" OnClick="OnLogoutAsync">Sair</MudNavLink>
+        </MudNavMenu>
+    </MudDrawer>
+    <MudMainContent Class="pt-16 px-16">
+        <MudContainer Class="mt-12 ml-0">
+            @Body
+        </MudContainer>
+    </MudMainContent>
+</MudLayout>
+
+
+@code {
+    private UsuarioDto user;
+    bool open = false;
+    bool dense = false;
+    bool preserveOpenState = true;
+    Breakpoint breakpoint = Breakpoint.Lg;
+    DrawerClipMode clipMode = DrawerClipMode.Always;
+
+
+    void ToggleDrawer()
+    {
+        open = !open;
+    }
+    protected override async Task OnInitializedAsync()
+    {
+        var authStatus = Handler.GetAuthenticationStateAsync();
+
+        user = await Handler.GetUserAsync();
+
+        if (authStatus.Result.Data!.IsAuthenticated)
+        {
+            navigationManager.NavigateTo("/");
+        }
+        else
+        {
+            navigationManager.NavigateTo("/login");
+        }
+    }
+    public async Task OnLogoutAsync()
+    {
+        var result = await Handler.LogoutAsync();
+
+        if (result)
+        {
+            navigationManager.NavigateTo("/login");
+        }
+        else
+        {
+            snackbar.Add("Erro ao fazer logout", Severity.Error);
+        }
+    }
+
+    MudTheme CProdTheme = new MudTheme()
+        {
+            Palette = new PaletteLight()
+            {
+                Primary = Colors.Blue.Darken3,
+                Secondary = Colors.DeepPurple.Darken1,
+                Tertiary = Colors.Teal.Default,
+                AppbarBackground = Colors.Blue.Darken4,
+                Background = Colors.Grey.Lighten4
+            },
+            PaletteDark = new PaletteDark()
+            {
+                Primary = Colors.Blue.Lighten1
+            },
+
+            LayoutProperties = new LayoutProperties()
+            {
+                DrawerWidthLeft = "260px",
+                DrawerWidthRight = "300px"
+            }
+        };
+
+}

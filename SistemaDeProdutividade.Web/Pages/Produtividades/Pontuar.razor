@@ -1,0 +1,91 @@
+﻿@page "/produtividades/pontuar"
+@using SistemaDeProdutividade.Web.Models
+@inherits PontuarProdutividadePage
+
+<PageTitle>Home 2</PageTitle>
+
+<MudContainer MinHeight="130px" Width="100%" Class="d-flex justify-space-between" >
+    <MudContainer MaxWidth="MaxWidth.Medium" Class="d-flex align-center">
+        <MudContainer Class="d-inline">
+            <MudText Typo="Typo.h4" Class="px-4">Pontuar Produtividade</MudText>
+            <MudText Typo="Typo.body2" Class="px-4 mud-text-secondary">Pontue a produtividade de acordo com as tarefas executadas</MudText>
+        </MudContainer>
+     </MudContainer>
+
+    <MudContainer MaxWidth="MaxWidth.Medium" Class="d-flex align-center justify-end gap-4">
+        <MudButton Variant="Variant.Outlined" Color="Color.Primary" Class="rounded-lg" Style="height: 44px; width: 150px;">Cancelar</MudButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="rounded-lg" Style="height: 44px; width: 150px;">Salvar</MudButton>
+      </MudContainer>
+</MudContainer>
+<br>
+<MudPaper MinHeight="350px" Width="100%" Class="py-12 px-6">
+    <MudContainer Class="d-flex" Fixed="true" Style="height: 130px" >
+        <MudContainer Style="width=45%;">
+            <MudText Typo="Typo.h6"> <b>Leonardo Santos</b></MudText>
+            <MudText Typo="Typo.body2">Matrícula: 300173634</MudText>
+            <MudText Typo="Typo.body2">Cargo: Gerente de Projetos</MudText>
+            <MudText Typo="Typo.body2">Coordenadoria Administrativa Financeira</MudText>
+        </MudContainer>
+        <MudContainer Style="width=45%;">
+            <MudText Typo="Typo.h6" Class="d-flex justify-end"> <b> @(Elements.Sum(x => x.Quantidade * x.Peso)) Pontos</b></MudText>
+            <MudStack>
+                     <MudDateRangePicker T="DateTime"
+                            @bind-Value="dateRange"
+                            Label="Período"
+                            StartText="Start Date"
+                            EndText="End Date"
+                            MaxDate="today"
+                            OnClose="OnDateRangeChanged" />
+            </MudStack>
+        </MudContainer>
+    </MudContainer>
+    <MudContainer Fixed="true" Style="min-height: 80px">
+        <MudTable T="AtividadeParaPontuar" Items="@Elements" Hover="true" Breakpoint="Breakpoint.Sm" @ref="mudTable">
+            <HeaderContent>
+                <MudTh>nº</MudTh>
+                <MudTh>Descrição da Atividade</MudTh>
+                <MudTh>Peso</MudTh>
+                <MudTh>Quantidade</MudTh>
+                <MudTh>Subtotal</MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd DataLabel="nº">@context.Number</MudTd>
+                <MudTd DataLabel="Descrição da Atividade">@context.Descricao</MudTd>
+                <MudTd DataLabel="Peso">@context.Peso</MudTd>
+                <MudTd DataLabel="Quantidade"><MudNumericField Style="width: 100%;" @bind-Value="@context.Quantidade" Label="Pontuação" Variant="Variant.Filled" Min="0" /></MudTd>
+                <MudTd DataLabel="Subtotal">@(context.Quantidade * context.Peso) </MudTd>
+            </RowTemplate>
+        </MudTable>
+    </MudContainer>
+</MudPaper>
+
+@code {
+    private MudTable<AtividadeParaPontuar> mudTable;
+    private static IEnumerable<AtividadeParaPontuar> Elements = new List<AtividadeParaPontuar>()
+    {
+        new AtividadeParaPontuar()
+        {
+            Number = 1,
+            Descricao = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+            Peso = 3,
+            Quantidade = 0,
+        },
+        new AtividadeParaPontuar()
+        {
+            Number = 2,
+            Descricao = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+            Peso = 3,
+            Quantidade = 0,
+        },
+        new AtividadeParaPontuar()
+        {
+            Number = 3,
+            Descricao = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+            Peso = 3,
+            Quantidade = 0,
+        },
+        
+
+    };
+    private int TotalPts = Elements.Sum(x => x.Quantidade * x.Peso);
+}

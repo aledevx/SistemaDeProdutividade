@@ -1,0 +1,83 @@
+﻿@page "/produtividades/cadastrar"
+@inherits CadastrarProdutividadePage
+
+<PageTitle>Home 2</PageTitle>
+
+<MudContainer MinHeight="130px" Width="100%" Class="d-flex justify-space-between" >
+    <MudContainer MaxWidth="MaxWidth.Medium" Class="d-flex align-center">
+        <MudContainer Class="d-inline">
+            <MudText Typo="Typo.h4" Class="px-4">Cadastrar Produtividade</MudText>
+            <MudText Typo="Typo.body2" Class="px-4 mud-text-secondary">Insira as produtividades a serem realizadas por cargo</MudText>
+        </MudContainer>
+     </MudContainer>
+
+    <MudContainer MaxWidth="MaxWidth.Medium" Class="d-flex align-center justify-end gap-4">
+        <MudButton Variant="Variant.Outlined" Color="Color.Primary" Class="rounded-lg" Style="height: 44px; width: 150px;">Cancelar</MudButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="rounded-lg" Style="height: 44px; width: 150px;">Salvar</MudButton>
+      </MudContainer>
+</MudContainer>
+<br>
+<MudPaper MinHeight="350px" Width="100%" Class="py-12 px-6">
+            <MudTextField @bind-Value="Cargo"
+                          Label="Cargo"
+                          Variant="Variant.Outlined"
+                          Required="true" RequiredError="Nome do Cargo não pode ficar em branco!"></MudTextField>
+    <br />
+    <MudContainer Class="d-flex" Fixed="true" Style="min-height: 130px; width: 100%" >
+        <MudPaper Class="mb-3 rounded-xl" Elevation="0" Width="100%" Style="background-color: #e6e6e6;">
+            <MudText Typo="Typo.h6" Class="px-6" Style="color: #989898">Atividade</MudText>
+            <MudContainer Class="d-flex justify-space-between align-center gap-4">
+                <MudTextField @bind-Value="newTaskDescription" AutoGrow="true" Label="Descrição" Variant="Variant.Filled" MaxLines="5" />
+                <MudNumericField Style="width: 25%;" @bind-Value="newTaskQuantity" Label="Pontuação" Variant="Variant.Filled" Min="1" />
+                <MudButton Variant="Variant.Filled" Class="rounded-lg" OnClick="AddTask" Color="Color.Tertiary" Style="width:120px; height: 40px">Adicionar</MudButton>
+            </MudContainer>
+        </MudPaper>
+    </MudContainer>
+    <MudContainer Fixed="true" Style="min-height: 80px;">
+        <MudTable Items="tasks" Style="overflow-x: auto;">
+            <HeaderContent>
+              <MudTh>nº</MudTh>
+              <MudTh>Descrição da Atividade</MudTh>
+              <MudTh>Quantidade</MudTh>
+              <MudTh></MudTh>
+              </HeaderContent>
+                    <RowTemplate>
+                        <MudTd DataLabel="nº">@numContador</MudTd>
+                        <MudTd DataLabel="Descrição da Atividade">@context.Description</MudTd>
+                        <MudTd DataLabel="Quantidade">@context.Quantity</MudTd>
+                        <MudTd DataLabel="Ações">
+                            <MudButton Variant="Variant.Filled" Color="Color.Error" OnClick="() => RemoveTask(context)">Remover</MudButton>
+                        </MudTd>
+                    </RowTemplate>
+        </MudTable>
+    </MudContainer>
+</MudPaper>
+
+@code {
+    private int numContador = 0;
+    private string newTaskDescription;
+    private int newTaskQuantity = 1;
+    private List<TaskItem> tasks = new List<TaskItem>();
+
+    private void AddTask()
+    {
+        if (!string.IsNullOrWhiteSpace(newTaskDescription) && newTaskQuantity >= 1)
+        {
+            numContador++;
+            tasks.Add(new TaskItem { Description = newTaskDescription, Quantity = newTaskQuantity });
+            newTaskDescription = string.Empty;
+            newTaskQuantity = 1;
+        }
+    }
+
+    private void RemoveTask(TaskItem task)
+    {
+        tasks.Remove(task);
+    }
+
+    private class TaskItem
+    {
+        public string Description { get; set; }
+        public int Quantity { get; set; }
+    }
+}
