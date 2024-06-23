@@ -12,6 +12,7 @@ public class UsuariosController : ControllerBase
     [HttpPost]
     [ProducesResponseType(typeof(MensagemSucessoCadastroResponseJson), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ListErrorsResponseJson),StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ErrorResponseJson), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Cadastrar([FromServices] ICadastrarUsuarioUseCase useCase, [FromBody] CadastrarUsuarioRequestJson request) 
     {
         var result = await useCase.Execute(request);

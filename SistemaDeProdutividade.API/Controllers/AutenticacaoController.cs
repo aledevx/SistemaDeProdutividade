@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using SistemaDeProdutividade.API.Extensions;
 using SistemaDeProdutividade.Application.Services.AD;
 using SistemaDeProdutividade.Communication.Requests;
@@ -11,11 +12,11 @@ namespace SistemaDeProdutividade.API.Controllers;
 [ApiController]
 public class AutenticacaoController : ControllerBase
 {
-    [HttpPost]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ListErrorsResponseJson),StatusCodes.Status400BadRequest)]
+    [HttpPost("login")]
+    [ProducesResponseType(typeof(UsuarioResponseJson),StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     //[ProducesResponseType(typeof(ErrorResponseJson), StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(typeof(ErrorResponseJson), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Login([FromServices] ADService ad, Autenticador tiaIdentity, ILogarUsuarioUseCase useCase,
         [FromBody] LoginRequestJson request)
     {
@@ -31,7 +32,35 @@ public class AutenticacaoController : ControllerBase
 
         var cpfUsuarioLogado = this.User.CPF();
 
-        return Ok(new { Message = "Logado com sucesso", CpfUserLogado = cpfUsuarioLogado });
+        ///TODO: CRIAR UM RESPONSE PARA O LOGIN, RETORNANDO CPF,FIRSTNAME, LASTNAME  DO USUÁRIO LOGADO 
 
+
+        //return Ok(new UsuarioResponseJson(result.Cpf, result.Nome, result.Perfil));
+
+
+        return Ok(new Response<UsuarioResponseJson>(new UsuarioResponseJson(result.Cpf, result.Nome, result.Perfil), 200, "Logado com sucesso"));
+
+    }
+    [HttpPost("logout")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> Logout([FromServices] Autenticador tiaIdentity)
+    {
+
+        await tiaIdentity.LogoutAsync();
+
+        return Ok("Deslogado com sucesso");
+    }
+    [HttpGet("verificar")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public IActionResult VerificaSeEstaLogado()
+    {
+        var cpfDoUsuario = this.User.CPF();
+        if (!cpfDoUsuario.IsNullOrEmpty()) 
+        {
+            return Ok(new { IsAuthenticated = true });
+        }
+
+        return Ok(new { IsAuthenticated = false });
     }
 }
