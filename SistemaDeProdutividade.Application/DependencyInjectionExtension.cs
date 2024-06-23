@@ -4,11 +4,6 @@ using SistemaDeProdutividade.Application.Services.EntityMapper;
 using SistemaDeProdutividade.Application.UseCases.Usuario.Cadastrar;
 using SistemaDeProdutividade.Application.UseCases.Usuario.Logar;
 using SistemaDeProdutividade.Domain.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SistemaDeProdutividade.Application;
 public static class DependencyInjectionExtension
@@ -17,6 +12,7 @@ public static class DependencyInjectionExtension
     {
         AddEntityMappingService(services);
         AddUseCases(services);
+        AddCrossOrigin(services);
         AddADService(services);
     }
     private static void AddEntityMappingService(IServiceCollection services) 
@@ -27,6 +23,11 @@ public static class DependencyInjectionExtension
     {
         services.AddScoped<ICadastrarUsuarioUseCase, CadastrarUsuarioUseCase>();
         services.AddScoped<ILogarUsuarioUseCase, LogarUsuarioUseCase>();
+    }
+    private static void AddCrossOrigin(IServiceCollection services) 
+    {
+        services.AddCors(options => options.AddPolicy("wasm", policy =>
+         policy.WithOrigins([Configuration.BackendUrl, Configuration.FrontendUrl]).AllowAnyMethod().AllowAnyHeader().AllowCredentials()));
     }
     private static void AddADService(IServiceCollection services)
     {
