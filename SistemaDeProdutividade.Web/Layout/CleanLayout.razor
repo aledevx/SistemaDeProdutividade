@@ -1,0 +1,46 @@
+﻿@inherits LayoutComponentBase
+
+<MudThemeProvider Theme="CProdTheme" />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+<MudLayout>
+    <MudMainContent Class="d-flex justify-center align-center">
+        <MudContainer Class="mt-12 d-flex justify-center">
+            @Body
+        </MudContainer>
+    </MudMainContent>
+</MudLayout>
+
+
+@code {
+    bool open = false;
+    bool dense = false;
+    bool preserveOpenState = true;
+    Breakpoint breakpoint = Breakpoint.Lg;
+    DrawerClipMode clipMode = DrawerClipMode.Always;
+
+    MudTheme CProdTheme = new MudTheme()
+        {
+            Palette = new PaletteLight()
+            {
+                Primary = Colors.Blue.Darken3,
+                Secondary = Colors.DeepPurple.Darken1,
+                Tertiary = Colors.Teal.Default,
+                AppbarBackground = Colors.Blue.Darken4,
+                Background = Colors.Grey.Lighten4
+            },
+            PaletteDark = new PaletteDark()
+            {
+                Primary = Colors.Blue.Lighten1
+            },
+
+            LayoutProperties = new LayoutProperties()
+            {
+                DrawerWidthLeft = "260px",
+                DrawerWidthRight = "300px"
+            }
+        };
+
+
+}

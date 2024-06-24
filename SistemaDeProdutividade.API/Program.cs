@@ -14,6 +14,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddApplication();
 
+builder.Services.AddRouting(options => options.LowercaseUrls = true);
+
 builder.Services.AddMvc(options => options.Filters.Add(typeof(ExceptionFilter)));
 
 builder.Services.AddTiaIdentity().AddCookie(x =>
@@ -35,7 +37,7 @@ app.UseTiaIdentity();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
-
+app.UseCors("wasm");
 app.MapControllers();
 
 app.Run();

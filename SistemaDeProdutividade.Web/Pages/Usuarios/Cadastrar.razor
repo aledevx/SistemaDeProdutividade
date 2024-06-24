@@ -1,0 +1,65 @@
+﻿@page "/usuarios/cadastrar"
+@inherits CadastrarUsuarioPage
+
+<PageTitle>Home 2</PageTitle>
+
+<MudContainer MinHeight="130px" Width="100%" Class="d-flex justify-space-between" >
+    <MudContainer MaxWidth="MaxWidth.Medium" Class="d-flex align-center">
+        <MudContainer Class="d-inline">
+            <MudText Typo="Typo.h4" Class="px-4">Título teste</MudText>
+            <MudText Typo="Typo.body2" Class="px-4 mud-text-secondary">Descrição das ações disponíveis na página</MudText>
+        </MudContainer>
+     </MudContainer>
+
+    <MudContainer MaxWidth="MaxWidth.Medium" Class="d-flex align-center justify-end gap-4">
+        <MudButton Variant="Variant.Outlined" Color="Color.Primary" Class="rounded-lg" Style="height: 44px; width: 150px;">Cancelar</MudButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="rounded-lg" Style="height: 44px; width: 150px;">Salvar</MudButton>
+      </MudContainer>
+</MudContainer>
+<br>
+<MudPaper MinHeight="650px" Width="100%" Class="py-12 px-6">
+    <MudForm >
+        <MudTextField T="string" Variant="Variant.Outlined" Label="Nome do(a) Servidor(a)" Required="true" RequiredError="Name is required!" />
+        <br/>
+        <MudTextField T="string" Variant="Variant.Outlined" Label="CPF" Required="true" RequiredError="Cpf is required!" Style="width: 25%;" />
+        <br />
+        <MudTextField T="string" Variant="Variant.Outlined" Label="Matricula" Required="true" RequiredError="Matricula is required!" Style="width: 25%;" />
+        <br />
+        <MudSelect @bind-Value="formModel.Cargo" Label="Cargo" Variant="Variant.Outlined" Style="width: 50%;" Required="true">
+            @foreach (var cargo in cargos)
+            {
+                <MudSelectItem Value="@cargo">@cargo</MudSelectItem>
+            }
+        </MudSelect>
+        <br />
+        <MudSelect @bind-Value="formModel.Setor" Label="Setor" Variant="Variant.Outlined" Required="true" Style="width: 40%;">
+            @foreach (var setor in setores)
+            {
+                <MudSelectItem Value="@setor">@setor</MudSelectItem>
+            }
+        </MudSelect>
+    </MudForm>
+</MudPaper>
+
+@code {
+    private MudForm form;
+    private FormModel formModel = new FormModel();
+
+    private string[] cargos = { "Programador", "Gerente", "Coordenador" };
+    private string[] setores = { "Gerência de Tecnologia da Informação", "Gerência de Recursos Humanos", "Gabinete" };
+
+    private void OnValidSubmit()
+    {
+        // Handle the form submission here
+        Console.WriteLine("Formulário válido. Nome: " + formModel.Nome);
+    }
+
+    public class FormModel
+    {
+        public string Nome { get; set; }
+        public string Cpf { get; set; }
+        public string Matricula { get; set; }
+        public string Cargo { get; set; }
+        public string Setor { get; set; }
+    }
+}

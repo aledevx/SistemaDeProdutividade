@@ -3,17 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34701.34
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SistemaDeProdutividade.Domain", "SistemaDeProdutividade.Domain\SistemaDeProdutividade.Domain.csproj", "{E055281E-5247-4A82-A593-BBE7AB9AEFC9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SistemaDeProdutividade.Domain", "SistemaDeProdutividade.Domain\SistemaDeProdutividade.Domain.csproj", "{E055281E-5247-4A82-A593-BBE7AB9AEFC9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SistemaDeProdutividade.Communication", "SistemaDeProdutividade.Communication\SistemaDeProdutividade.Communication.csproj", "{1B8F9192-087B-483A-A8FC-44FA9B5BD8C6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SistemaDeProdutividade.Communication", "SistemaDeProdutividade.Communication\SistemaDeProdutividade.Communication.csproj", "{1B8F9192-087B-483A-A8FC-44FA9B5BD8C6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SistemaDeProdutividade.Exception", "SistemaDeProdutividade.Exception\SistemaDeProdutividade.Exception.csproj", "{AAB86F23-62B6-4247-96D6-D7BE151D85E7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SistemaDeProdutividade.Exception", "SistemaDeProdutividade.Exception\SistemaDeProdutividade.Exception.csproj", "{AAB86F23-62B6-4247-96D6-D7BE151D85E7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SistemaDeProdutividade.Infrastructure", "SistemaDeProdutividade.Infrastructure\SistemaDeProdutividade.Infrastructure.csproj", "{87E13C8B-F924-4E25-872A-6EEBED755567}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SistemaDeProdutividade.Infrastructure", "SistemaDeProdutividade.Infrastructure\SistemaDeProdutividade.Infrastructure.csproj", "{87E13C8B-F924-4E25-872A-6EEBED755567}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SistemaDeProdutividade.Application", "SistemaDeProdutividade.Application\SistemaDeProdutividade.Application.csproj", "{D5159EDF-97EE-4BDB-9B57-457DDE6440BE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SistemaDeProdutividade.Application", "SistemaDeProdutividade.Application\SistemaDeProdutividade.Application.csproj", "{D5159EDF-97EE-4BDB-9B57-457DDE6440BE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SistemaDeProdutividade.API", "SistemaDeProdutividade.API\SistemaDeProdutividade.API.csproj", "{86ECD1DB-20F5-4851-A5D5-2DD5575002B5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SistemaDeProdutividade.API", "SistemaDeProdutividade.API\SistemaDeProdutividade.API.csproj", "{86ECD1DB-20F5-4851-A5D5-2DD5575002B5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SistemaDeProdutividade.Web", "SistemaDeProdutividade.Web\SistemaDeProdutividade.Web.csproj", "{8F322955-5935-43A0-862F-9F422E8E0CB8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{86ECD1DB-20F5-4851-A5D5-2DD5575002B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{86ECD1DB-20F5-4851-A5D5-2DD5575002B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{86ECD1DB-20F5-4851-A5D5-2DD5575002B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F322955-5935-43A0-862F-9F422E8E0CB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F322955-5935-43A0-862F-9F422E8E0CB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F322955-5935-43A0-862F-9F422E8E0CB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F322955-5935-43A0-862F-9F422E8E0CB8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

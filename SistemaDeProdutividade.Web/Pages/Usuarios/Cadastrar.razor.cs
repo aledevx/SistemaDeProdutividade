@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using MudBlazor;
+using SistemaDeProdutividade.Communication.Requests.Produtividades;
 
 namespace SistemaDeProdutividade.Web.Pages;
 

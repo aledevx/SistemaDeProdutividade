@@ -88,7 +88,7 @@ public class AuthHandler
 
         return userDto;
     }
-    public async Task<Response<VerificaAutenticacaoResponseJson>> GetStatusAuthAsync()
+    public async Task<Response<VerificaAutenticacaoResponseJson>> GetAuthenticationStateAsync()
     {
         var response = await _client.PostAsync("api/autenticacao/verificar", null);
 

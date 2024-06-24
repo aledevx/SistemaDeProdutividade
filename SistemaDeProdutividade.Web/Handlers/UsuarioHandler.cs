@@ -13,11 +13,11 @@ public class UsuarioHandler
     {
         _client = client;
     }
-    public async Task<Response<MensagemSucessoCadastroResponseJson>> CadastrarAsync(InserirUsuarioRequestJson request)
+    public async Task<Communication.Responses.Response<MensagemSucessoCadastroResponseJson>> CadastrarAsync(InserirUsuarioRequestJson request)
     {
         var result = await _client.PostAsJsonAsync("api/usuarios", request);
 
-        return await result.Content.ReadFromJsonAsync<Response<MensagemSucessoCadastroResponseJson>>() ?? new Response<MensagemSucessoCadastroResponseJson>(null, 400, "Falha ao criar categoria");
+        return await result.Content.ReadFromJsonAsync<Communication.Responses.Response<MensagemSucessoCadastroResponseJson>>() ?? new Communication.Responses.Response<MensagemSucessoCadastroResponseJson>(null, 400, "Falha ao criar categoria");
 
     }
 }
