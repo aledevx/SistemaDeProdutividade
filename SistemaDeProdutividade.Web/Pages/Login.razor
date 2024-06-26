@@ -4,6 +4,7 @@
 
 @inject NavigationManager Navigation
 
+<PageTitle>Tela de login</PageTitle>
 
 <MudGrid Justify="Justify.Center" AlignItems="AlignItems.Center">
     <MudItem xs="12" sm="8" md="4">
@@ -29,7 +30,14 @@
             <MudContainer Class="d-flex flex-column align-center gap-4 py-4" >
                 <MudTextField Variant="Variant.Outlined" Label="Cpf" @bind-Value="InputModel.Cpf" Margin="Margin.Dense" InputType="InputType.Text" Pattern="[0-9]{11}$" MaxLength="11" />
                 <MudTextField Variant="Variant.Outlined" Label="Senha" @bind-Value="InputModel.Senha" InputType="InputType.Password" Margin="Margin.Dense" />
-                <MudButton Class="rounded-xl" ButtonType="ButtonType.Submit" Variant="Variant.Filled" Size="Size.Small" Color="Color.Primary" OnClick="OnValidSubmitAsync" Style="width: 60%; font-weight: inherit; text-transform: initial;">Acessar</MudButton>
+                @if (IsBusy)
+                {
+                    <MudProgressCircular Indeterminate="true" Color="Color.Primary" />
+                }
+                else
+                {
+                    <MudButton Class="rounded-xl" ButtonType="ButtonType.Submit" Variant="Variant.Filled" Size="Size.Small" Color="Color.Primary" OnClick="OnValidSubmitAsync" Style="width: 60%; font-weight: inherit; text-transform: initial;">Acessar</MudButton>
+                }
             </MudContainer>
         </MudPaper>
     </MudItem>

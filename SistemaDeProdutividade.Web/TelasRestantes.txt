@@ -1,0 +1,19 @@
+﻿
+	PRODUTIVIDADE
+-> Visualizar produtividade feita (Exibir campo observação caso ele tenha sido preenchido,
+									exibir status de andamento da produtividade e botões de 
+									finalizar/recusar caso seja adm)
+-> Criar botão assinatura na tela de Visualizar Produtividade e Dropdown informando o percentual à receber daquela prod (Para chefes)
+-> (OK) Index de Produtividades feitas (Exibir produtividades de acordo com o perfil)
+															Chefe -> Visualizar todas as prods do seu próprio setor
+															Servidor -> Não tem acesso à essa tela, ele verá as próprias prod no perfil dele
+															Adm -> Visualizar todas as prods
+-> (OK) Criar "caixa de entrada" para visualizar as prods pendentes para finalizar/devolver/assinar
+
+	SETOR
+->
+
+	USUARIO
+-> Lotação de usuário
+-> Atualização/Edição de usuário
+ 

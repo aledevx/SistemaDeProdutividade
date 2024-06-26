@@ -2,14 +2,15 @@
 @inherits UsuarioPerfilPage
 @using System.Net.Http.Json
 @using SistemaDeProdutividade.Web.Models
+@using SistemaDeProdutividade.Web.Models.Produtividades
 @inject HttpClient httpClient
 
-<PageTitle>Home 2</PageTitle>
+<PageTitle>Perfil de usuário</PageTitle>
 
 <MudContainer MinHeight="130px" Width="100%" Class="d-flex justify-space-between" >
     <MudContainer MaxWidth="MaxWidth.Medium" Class="d-flex align-center">
         <MudContainer Class="d-inline">
-            <MudText Typo="Typo.h4" Class="px-4">Detalhes</MudText>
+            <MudText Typo="Typo.h4" Class="px-4">Informações</MudText>
             <MudText Typo="Typo.body2" Class="px-4 mud-text-secondary">Dados do usuário e suas respectivas produtividades.</MudText>
         </MudContainer>
      </MudContainer>
@@ -26,15 +27,19 @@
             <MudText Typo="Typo.h6"> <b>Leonardo Santos</b></MudText>
             <MudText Typo="Typo.body2">Matrícula: 300173634</MudText>
             <MudText Typo="Typo.body2">Cargo: Gerente de Projetos</MudText>
-            <MudText Typo="Typo.body2">Coordenadoria Administrativa Financeira</MudText>
+            <MudText Typo="Typo.body2">Lotação: Coordenadoria Administrativa Financeira</MudText>
         </MudContainer>
         <MudContainer Style="width=45%;">
 
         </MudContainer>
     </MudContainer>
     <MudContainer Fixed="true" Style="min-height: 80px">
-        <MudTable T="ProdutividadeIndex" Items="@Elements" Hover="true" Breakpoint="Breakpoint.Sm" @ref="mudTable"
+        <MudTable T="UsuarioProdIndex" Items="@Elements" Hover="true" Breakpoint="Breakpoint.Sm" @ref="mudTable"
                   RowClass="cursor-pointer">
+            <ToolBarContent>
+                <MudText Typo="Typo.h6">Produtividades</MudText>
+                <MudSpacer />
+            </ToolBarContent>
            <HeaderContent>
                 <MudTh>nº</MudTh>
                 <MudTh>Cargo</MudTh>
@@ -43,7 +48,7 @@
                 <MudTh>Status</MudTh>
     </HeaderContent>
             <RowTemplate>
-                <MudTd DataLabel="nº">@context.Number</MudTd>
+                <MudTd DataLabel="nº">@context.Code</MudTd>
                 <MudTd DataLabel="Cargo">@context.Cargo</MudTd>
                 <MudTd DataLabel="Atividade realizada em">@context.DataInicial.ToString("dd/MM/yyyy") à @context.DataFinal.ToString("dd/MM/yyyy")</MudTd>
                 <MudTd DataLabel="Criado em">@context.DataCriacao</MudTd>
@@ -56,54 +61,13 @@
 
 
 @code {
-    private MudTable<ProdutividadeIndex> mudTable;
-    private IEnumerable<ProdutividadeIndex> Elements = new List<ProdutividadeIndex>()
+    private MudTable<UsuarioProdIndex> mudTable;
+    private IEnumerable<UsuarioProdIndex> Elements = new List<UsuarioProdIndex>()
     {
-        new ProdutividadeIndex()
-        {
-            Number = 1,
-            Cargo = "Gerente de Contabilidade",
-            DataInicial = new DateTime(2024,6,30),
-            DataFinal = new DateTime(2024,7,29),
-            DataCriacao = new DateTime(2024,8,1,9,45,25),
-            Status = "Aberto"
-        },
-        new ProdutividadeIndex()
-        {
-            Number = 2,
-            Cargo = "Gerente de Contabilidade",
-            DataInicial = new DateTime(2024,6,30),
-            DataFinal = new DateTime(2024,7,29),
-            DataCriacao = new DateTime(2024,8,1,9,45,25),
-            Status = "Indeferido"
-        },
-        new ProdutividadeIndex()
-        {
-            Number = 3,
-            Cargo = "Gerente de Contabilidade",
-            DataInicial = new DateTime(2024,6,30),
-            DataFinal = new DateTime(2024,7,29),
-            DataCriacao = new DateTime(2024,8,1,9,45,25),
-            Status = "Pendente"
-        },
-        new ProdutividadeIndex()
-        {
-            Number = 4,
-            Cargo = "Gerente de Contabilidade",
-            DataInicial = new DateTime(2024,6,30),
-            DataFinal = new DateTime(2024,7,29),
-            DataCriacao = new DateTime(2024,8,1,9,45,25),
-            Status = "Deferido"
-        },
-        new ProdutividadeIndex()
-        {
-            Number = 5,
-            Cargo = "Gerente de Contabilidade",
-            DataInicial = new DateTime(2024,6,30),
-            DataFinal = new DateTime(2024,7,29),
-            DataCriacao = new DateTime(2024,8,1,9,45,25),
-            Status = "Deferido"
-        }
-
+        new UsuarioProdIndex("A123","Gerente de Contabilidade", new DateTime(2024,6,30), new DateTime(2024,7,29), new DateTime(2024,8,1,9,45,25), "Finalizado"),
+        new UsuarioProdIndex("B226","Gerente de Contabilidade", new DateTime(2024,6,30), new DateTime(2024,7,29), new DateTime(2024,8,1,9,45,25), "Finalizado"),
+        new UsuarioProdIndex("A445","Gerente de Contabilidade", new DateTime(2024,6,30), new DateTime(2024,7,29), new DateTime(2024,8,1,9,45,25), "Finalizado"),
+        new UsuarioProdIndex("C464","Gerente de Contabilidade", new DateTime(2024,6,30), new DateTime(2024,7,29), new DateTime(2024,8,1,9,45,25), "Finalizado"),
+        new UsuarioProdIndex("D348","Assessor V", new DateTime(2024,6,30), new DateTime(2024,7,29), new DateTime(2024,8,1,9,45,25), "Finalizado")
     };
 }

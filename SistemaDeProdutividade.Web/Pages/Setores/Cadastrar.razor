@@ -1,0 +1,51 @@
+﻿@page "/setores/cadastrar"
+@using SistemaDeProdutividade.Web.Models.Setores
+@inherits CadastrarSetorPage
+
+<PageTitle>Cadastrar</PageTitle>
+
+<MudContainer MinHeight="130px" Width="100%" Class="d-flex justify-space-between" >
+    <MudContainer MaxWidth="MaxWidth.Medium" Class="d-flex align-center">
+        <MudContainer Class="d-inline">
+            <MudText Typo="Typo.h4" Class="px-4">Cadastrar</MudText>
+            <MudText Typo="Typo.body2" Class="px-4 mud-text-secondary">Página para cadastro de setores</MudText>
+        </MudContainer>
+     </MudContainer>
+
+    <MudContainer MaxWidth="MaxWidth.Medium" Class="d-flex align-center justify-end gap-4">
+        <MudButton Variant="Variant.Outlined" Color="Color.Primary" Class="rounded-lg" Style="height: 44px; width: 150px;">Cancelar</MudButton>
+        <MudButton ButtonType="ButtonType.Submit" OnClick="OnValidSubmitAsync" Variant="Variant.Filled" Color="Color.Primary" Class="rounded-lg" Style="height: 44px; width: 150px;">Salvar</MudButton>
+      </MudContainer>
+</MudContainer>
+<br>
+<MudPaper MinHeight="650px" Width="100%" Class="py-12 px-6">
+    <EditForm Model="@InputModel" OnInvalidSubmit="OnValidSubmitAsync">
+        <MudTextField Variant="Variant.Outlined" Label="Nome Setor" Required="true" RequiredError="Name is required!" @bind-Value="InputModel.Nome" For="@(() => InputModel.Nome)" />
+        <br/>
+        <MudSelect @bind-Value="InputModel.TipoSetor" Label="Tipo do setor" Variant="Variant.Outlined" Style="width: 50%;" Required="true">
+            @foreach (var tipo in tipoSetor)
+            {
+                <MudSelectItem Value="@tipo">@tipo</MudSelectItem>
+            }
+        </MudSelect>
+        <br />
+        <MudSelect @bind-Value="InputModel.SetorSuperiorId" T="Guid?" Label="Selecione o setor chefe" Variant="Variant.Outlined" Style="width: 50%;">
+            <MudSelectItem T="Guid?" Value="null">Nenhum</MudSelectItem>
+            @foreach (var setor in setoresSuperior)
+            {
+                <MudSelectItem T="Guid?" Value="@(setor.Id)">@setor.Nome</MudSelectItem>
+            }
+        </MudSelect>
+        <br />
+    </EditForm>
+</MudPaper>
+@code
+{
+    private IList<SetorIndex> setoresSuperior = new List<SetorIndex>()
+    {
+        new SetorIndex(Guid.NewGuid(), "Gerência de Tecnologia da Informação"),
+        new SetorIndex(Guid.NewGuid(), "Coordenadoria de Recursos Humanos"),
+        new SetorIndex(Guid.NewGuid(), "Assessoria de Comunicação")
+    };
+}
+

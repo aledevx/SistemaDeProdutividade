@@ -1,0 +1,90 @@
+﻿@page "/produtividades"
+@using System.Net.Http.Json
+@using SistemaDeProdutividade.Web.Models
+@using SistemaDeProdutividade.Web.Models.Produtividades
+@using SistemaDeProdutividade.Web.Models.Setores
+@inject NavigationManager Navigation
+@inherits IndexProdPage
+
+<PageTitle>Index</PageTitle>
+
+<MudContainer MinHeight="130px" Width="100%" Class="d-flex justify-space-between" >
+    <MudContainer MaxWidth="MaxWidth.Medium" Class="d-flex align-center">
+        <MudContainer Class="d-inline">
+            <MudText Typo="Typo.h4" Class="px-4">Produtividades</MudText>
+            <MudText Typo="Typo.body2" Class="px-4 mud-text-secondary">Busque e visualize produtividades já pontuadas</MudText>
+        </MudContainer>
+     </MudContainer>
+
+    <MudContainer MaxWidth="MaxWidth.Medium" Class="d-flex align-center justify-end gap-4">
+      
+      </MudContainer>
+</MudContainer>
+<br>
+<MudPaper MinHeight="350px" Width="100%" Class="py-12 px-6">
+    <MudTable Items="@ProdutividadesFeitas" Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped" Filter="new Func<ProdFeitaIndex,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
+        <ToolBarContent>
+            <MudText Typo="Typo.h6">Produtividades</MudText>
+            <MudSpacer />
+            <MudTextField @bind-Value="searchString1" Placeholder="Buscar" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+        </ToolBarContent>
+        <HeaderContent>
+            <MudTh>nº</MudTh>
+            <MudTh>Servidor</MudTh>
+            <MudTh>Cargo</MudTh>
+            <MudTh>Criado em</MudTh>
+            <MudTh>Status</MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="Nº">@context.Code</MudTd>
+            <MudTd DataLabel="Nome">@context.NomeUsuario</MudTd>
+            <MudTd DataLabel="Nº">@context.Cargo</MudTd>
+            <MudTd DataLabel="Nome">@context.DataCriacao</MudTd>
+            <MudTd DataLabel="Nº">@context.Status</MudTd>
+            <MudTd><MudButton Variant="Variant.Filled" Size="Size.Small" Color="Color.Tertiary" OnClick="() => NavigateToProfile()">Visualizar</MudButton></MudTd>
+            </RowTemplate>
+        <PagerContent>
+            <MudTablePager />
+        </PagerContent>
+    </MudTable>
+
+</MudPaper>
+@code {
+    private bool dense = false;
+    private bool hover = true;
+    private bool striped = false;
+    private bool bordered = false;
+    private string searchString1 = "";
+    private ProdFeitaIndex selectedItem1 = null;
+    private HashSet<ProdFeitaIndex> selectedItems = new HashSet<ProdFeitaIndex>();
+
+    private IEnumerable<ProdFeitaIndex> ProdutividadesFeitas = new List<ProdFeitaIndex>()
+    {
+        new ProdFeitaIndex("A123","Alexandre da Silva Oliveira", "Assessor V",  new DateTime(2024,8,1,9,45,25), "Aguardando assinatura do Chefe"),
+        new ProdFeitaIndex("B223","João de Oliveira Santos", "Coordenador de Recursos Humanos",  new DateTime(2024,8,1,9,45,25), "Disponibilizado para o RH"),
+        new ProdFeitaIndex("A442","Maria Joaquina", "Chefe do Núcleo de Programação",  new DateTime(2024,8,1,9,45,25), "Finalizado"),
+        new ProdFeitaIndex("C541","Arnold", "Assessor Técnico II",  new DateTime(2024,8,1,9,45,25), "Indeferido"),
+    };
+
+    private bool FilterFunc1(ProdFeitaIndex prod) => FilterFunc(prod, searchString1);
+
+    private void NavigateToProfile()
+    {
+        Navigation.NavigateTo($"/produtividades/visualizar");
+    }
+
+    private bool FilterFunc(ProdFeitaIndex prod, string searchString)
+    {
+        if (string.IsNullOrWhiteSpace(searchString))
+            return true;
+        if (prod.Cargo.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        if (prod.Code.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        if (prod.Status.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        if ($"{prod.DataCriacao}".Contains(searchString))
+            return true;
+        return false;
+    }
+    }

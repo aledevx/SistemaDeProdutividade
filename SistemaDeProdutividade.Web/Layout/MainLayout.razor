@@ -18,7 +18,7 @@
                                             letter-spacing: 0px;
                                             color: #FCFCFC;
                                             opacity: 1;"> <b>CPROD</b>  </MudText>
-            <MudText Style="opacity: 0.5">SERVIDOR</MudText>
+            <MudText Style="opacity: 0.5; text-transform: uppercase">@user.Perfil</MudText>
 
         </MudContainer>
         <MudSpacer />
@@ -28,22 +28,36 @@
         <MudNavMenu Class="mud-width-full" Rounded="true" Margin="Margin.Dense" Color="Color.Primary">
             <MudNavLink Disabled>
                 <MudContainer Class="">
+                    @if (String.IsNullOrEmpty(user.FirstName) || String.IsNullOrEmpty(user.LastName))
+                    {
+                        <MudText Typo="Typo.h6" Class="px-4 pt-2">Nome Sobrenome</MudText>
+                        <MudText Typo="Typo.body2" Class="px-4 mud-text-secondary">Perfil</MudText>
+                    }
+                    else
+                    {
                     <MudText Typo="Typo.h6" Class="px-4 pt-2">@user.FirstName @user.LastName</MudText>
                     <MudText Typo="Typo.body2" Class="px-4 mud-text-secondary">@user.Perfil</MudText>
+                    }
                 </MudContainer>
             </MudNavLink>
             <br>
-            <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Person" Href="/home">Minhas Informações</MudNavLink>
+            <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Person" Href="/usuarios/perfil">Minhas Informações</MudNavLink>
             <MudDivider Class="my-2" />
-            <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Man4" Href="/usuarios/inserir">Cadastrar Usuario</MudNavLink>
-            <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Group" Href="/usuarios">Usuarios Index</MudNavLink>
-            <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Man2" Href="/usuarios/cadastrar">Cadastrar Usuario</MudNavLink>
-            <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.FactCheck" Href="/base">Layoult Prod Base</MudNavLink>
-            <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.FactCheck" Href="/produtividades/cadastrar">Cadastrar Produtividade</MudNavLink>
-            <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.EditNote" Href="/produtividades/pontuar">Fazer Produtividade</MudNavLink>
-            <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.FactCheck" Href="/usuarios/perfil">Minhas Produtividades</MudNavLink>
-            <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.DriveFileRenameOutline" Href="/">Assinar Produtividades</MudNavLink>
-            <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.LibraryBooks" Href="/">Avaliar Produtividades</MudNavLink>
+            @if (user.Perfil == "Admin" || user.Perfil == "Chefe")
+            {
+                <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Inbox" Href="/produtividades/recebido">Caixa de Entrada</MudNavLink>
+                <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.FactCheck" Href="/produtividades">Produtividades</MudNavLink>
+            }
+            <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.EditNote" Href="/produtividades/pontuar">Pontuar Produtividade</MudNavLink>
+            <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.LibraryBooks" Href="/produtividades/minhas">Minhas Produtividades</MudNavLink>
+            @if (user.Perfil == "Admin")
+            {
+                <MudDivider Class="my-2" />
+                <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Man4" Href="/usuarios/inserir">Inserir Usuario(rota de testes)</MudNavLink>
+                <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Groups2" Href="/usuarios">Usuários</MudNavLink>
+                <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Lan" Href="/setores">Setores</MudNavLink>
+                <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Assignment" Href="/produtividades/mapas">Mapas de Produtividades</MudNavLink>
+            }
             <MudDivider Class="my-2" />
             <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Logout" OnClick="OnLogoutAsync">Sair</MudNavLink>
         </MudNavMenu>
@@ -71,17 +85,16 @@
     }
     protected override async Task OnInitializedAsync()
     {
-        var authStatus = Handler.GetAuthenticationStateAsync();
-
+        
         user = await Handler.GetUserAsync();
 
-        if (authStatus.Result.Data!.IsAuthenticated)
+        if (String.IsNullOrEmpty(user.Cpf))
         {
-            navigationManager.NavigateTo("/");
+            navigationManager.NavigateTo("/login");
         }
         else
         {
-            navigationManager.NavigateTo("/login");
+            navigationManager.NavigateTo("/");
         }
     }
     public async Task OnLogoutAsync()

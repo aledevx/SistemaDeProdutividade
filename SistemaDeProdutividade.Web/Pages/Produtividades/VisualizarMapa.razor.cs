@@ -1,14 +1,15 @@
 ﻿using Microsoft.AspNetCore.Components;
-using SistemaDeProdutividade.Web.Requests.Produtividades;
+using MudBlazor;
+using SistemaDeProdutividade.Communication.Requests.Produtividades;
 
 namespace SistemaDeProdutividade.Web.Pages;
 
-public partial class CadastrarProdutividadePage : ComponentBase
+public partial class VisualizarMapaProdPage : ComponentBase
 {
     #region Properties
 
     public bool IsBusy { get; set; } = false;
-    public CadastrarProdutividadeRequestJson InputModel { get; set; } = new();
+    public PontuarProdutividadeRequestJson InputModel { get; set; } = new();
     #endregion
 
     public string[] headings = { "nº", "Descrição da Atividade", "Peso", "Quantidade", "Subtotal" };
@@ -20,7 +21,16 @@ public partial class CadastrarProdutividadePage : ComponentBase
         @"5 DescriçãoTeste 3 10 30",
         @"6 DescriçãoTeste 3 10 30",
     };
+    public DateRange dateRange = new DateRange(DateTime.Now.AddDays(-30), DateTime.Now);
+    public DateTime today = DateTime.Now;
 
+    private void OnDateRangeChanged()
+    {
+        if (dateRange.End.HasValue)
+        {
+            dateRange = new DateRange(dateRange.Start, today);
+        }
+    }
     //protected override async Task OnInitializedAsync()
     //{
     //    IsBusy = true;
