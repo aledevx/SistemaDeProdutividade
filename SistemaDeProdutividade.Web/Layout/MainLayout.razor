@@ -48,12 +48,13 @@
                 <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Inbox" Href="/produtividades/recebido">Caixa de Entrada</MudNavLink>
                 <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.FactCheck" Href="/produtividades">Produtividades</MudNavLink>
             }
+            @* <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Terminal" Href="/teste/teste">Not Found Page</MudNavLink> *@
             <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.EditNote" Href="/produtividades/pontuar">Pontuar Produtividade</MudNavLink>
             <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.LibraryBooks" Href="/produtividades/minhas">Minhas Produtividades</MudNavLink>
             @if (user.Perfil == "Admin")
             {
                 <MudDivider Class="my-2" />
-                <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Man4" Href="/usuarios/inserir">Inserir Usuario(rota de testes)</MudNavLink>
+                @* <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Man4" Href="/usuarios/inserir">Inserir Usuario(rota de testes)</MudNavLink> *@
                 <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Groups2" Href="/usuarios">Usuários</MudNavLink>
                 <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Lan" Href="/setores">Setores</MudNavLink>
                 <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Assignment" Href="/produtividades/mapas">Mapas de Produtividades</MudNavLink>

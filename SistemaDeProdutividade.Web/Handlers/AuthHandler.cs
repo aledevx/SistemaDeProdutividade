@@ -57,36 +57,48 @@ public class AuthHandler
 
         return false;
     }
-    public async Task<UsuarioDto> GetUserAsync()
+    public async Task<UsuarioDto?> GetUserAsync()
     {
         var result = await _jsRuntime.InvokeAsync<string>("eval", "document.cookie");
-        var cookies = result.Split(';');
         var userDto = new UsuarioDto();
-
-        foreach (var cookie in cookies)
+        //TRATAR CASO VENHA NULL
+        if (string.IsNullOrEmpty(result))
         {
-            var parts = cookie.Split('=');
-            var key = parts[0].Trim();
-            var value = parts[1].Trim();
-
-            switch (key)
-            {
-                case "FirstName":
-                    userDto.FirstName = value;
-                    break;
-                case "LastName":
-                    userDto.LastName = value;
-                    break;
-                case "Perfil":
-                    userDto.Perfil = value;
-                    break;
-                case "Cpf":
-                    userDto.Cpf =value;
-                    break;
-            }
+            userDto.FirstName = "";
+            userDto.LastName = "";
+            userDto.Perfil = "";
+            userDto.Cpf = "";
+            return userDto;
         }
+        else 
+        {
+            var cookies = result.Split(';');
 
-        return userDto;
+            foreach (var cookie in cookies)
+            {
+                var parts = cookie.Split('=');
+                var key = parts[0].Trim();
+                var value = parts[1].Trim();
+
+                switch (key)
+                {
+                    case "FirstName":
+                        userDto.FirstName = value;
+                        break;
+                    case "LastName":
+                        userDto.LastName = value;
+                        break;
+                    case "Perfil":
+                        userDto.Perfil = value;
+                        break;
+                    case "Cpf":
+                        userDto.Cpf =value;
+                        break;
+                }
+            }
+
+            return userDto;
+        }
     }
     public async Task<Response<VerificaAutenticacaoResponseJson>> GetAuthenticationStateAsync()
     {

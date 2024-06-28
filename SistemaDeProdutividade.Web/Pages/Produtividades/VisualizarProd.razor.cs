@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using SistemaDeProdutividade.Communication.Requests.Produtividades;
+using SistemaDeProdutividade.Web.Requests.Produtividades;
 
 namespace SistemaDeProdutividade.Web.Pages;
 
@@ -9,26 +10,23 @@ public partial class VisualizarProdPage : ComponentBase
     #region Properties
 
     public bool IsBusy { get; set; } = false;
-    public PontuarProdutividadeRequestJson InputModel { get; set; } = new();
+    public EditarProdutividadeRequestJson ProdData { get; set; } = new EditarProdutividadeRequestJson("A111",
+        "Alexandre da Silva Oliveira",
+        "2003391",
+        "Assessor V",
+        "Gerência de Tecnologia da Informação",
+        new DateTime(2024, 6, 30), new DateTime(2024, 7, 29), "Aguardando assinatura do Chefe");
     #endregion
 
-    public string[] headings = { "nº", "Descrição da Atividade", "Peso", "Quantidade", "Subtotal" };
-    public string[] rows = {
-        @"1 DescriçãoTeste 3 10 30",
-        @"2 DescriçãoTeste 3 10 30",
-        @"3 DescriçãoTeste 3 10 30",
-        @"4 DescriçãoTeste 3 10 30",
-        @"5 DescriçãoTeste 3 10 30",
-        @"6 DescriçãoTeste 3 10 30",
-    };
     public DateRange dateRange = new DateRange(DateTime.Now.AddDays(-30), DateTime.Now);
-    public DateTime today = DateTime.Now;
+    public DateTime dataHoje = DateTime.Now;
 
     private void OnDateRangeChanged()
     {
         if (dateRange.End.HasValue)
         {
-            dateRange = new DateRange(dateRange.Start, today);
+            ProdData.DataInicio = dateRange.Start!.Value;
+            ProdData.DataFim = dateRange.End!.Value;
         }
     }
     //protected override async Task OnInitializedAsync()

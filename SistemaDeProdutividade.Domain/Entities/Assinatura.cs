@@ -13,5 +13,5 @@ public class Assinatura
     public Guid UsuarioId { get; set; }
     public Guid ProdutividadeFeitaId { get; set; }
     public DateTime DataAssinatura { get; set; } = DateTime.Now;
-    public bool Ativo { get; set; } = true;
+    public bool Ativo { get; set; } = true; // DESATIVAR QUANDO A PROD NÃO FOR ACEITA, DEVOLVIDA PELO ADMIN NO CASO
 }

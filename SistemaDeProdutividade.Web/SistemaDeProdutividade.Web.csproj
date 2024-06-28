@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -21,6 +21,11 @@
 
   <ItemGroup>
     <Folder Include="Contracts\" />
+    <Folder Include="Requests\Usuarios\" />
+    <Folder Include="Responses\Cargos\" />
+    <Folder Include="Responses\Setores\" />
+    <Folder Include="Responses\Usuarios\" />
+    <Folder Include="Responses\Produtividades\" />
   </ItemGroup>
 
   <ItemGroup>

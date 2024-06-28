@@ -16,4 +16,15 @@
 	USUARIO
 -> Lotação de usuário
 -> Atualização/Edição de usuário
- 
+
+
+
+
+-------------------ANOTAÇÕES-------------------
+VisualizarProd -> Os botões de ações só serão exibidos de acordo com o perfil do usuário logado + status da prod visualizada,
+				  mesma coisa para os campos de pontuar e escolher data, só apareceram se o usuário for dono
+
+			   -> Colocar um botão ao lado do status da prod para exibir caso o status seja "devolvida", esse botão terá as
+				  informações do campo "observação", esse botão será um "Scrollable Dialog" do MudBlazor
+
+Nas Telas de visualizar a produtividade, deixar mais evidente o cargo daquela Produtividade!

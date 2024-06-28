@@ -1,5 +1,8 @@
 ﻿@using Microsoft.AspNetCore.Components.Authorization
+@using SistemaDeProdutividade.Web.DTOs
+@using SistemaDeProdutividade.Web.Handlers
 @inject NavigationManager Navigation
+@inject AuthHandler Handler;
 
 <Router AppAssembly="@typeof(App).Assembly">
     <Found Context="routeData">
@@ -9,15 +12,35 @@
     <NotFound>
         <PageTitle>Not found</PageTitle>
         <LayoutView Layout="@typeof(CleanLayout)">
-            <p role="alert"><MudText Typo="Typo.h2" Color="Color.Primary">404 Not Found</MudText></p>
+            <MudContainer Class="d-flex flex-column">
+                <p role="alert"><MudText Typo="Typo.h2" Class="d-flex justify-center" Color="Color.Primary">404 Not Found</MudText></p>
+                <MudText Typo="Typo.body2" Class="px-4 mud-text-secondary d-flex justify-center">
+                    A página solicitada não existe ou você não tem permissão para acessa-la.
+                </MudText>
+                <br>
+               
+                <MudContainer MaxWidth="MaxWidth.Medium" Class="d-flex align-center justify-center">
+                    <MudButton Variant="Variant.Outlined" Color="Color.Primary" Class="rounded-lg" OnClick="RedirectTo" Style="height: 44px; width: 150px;">Voltar</MudButton>
+                </MudContainer>
+            </MudContainer>
         </LayoutView>
     </NotFound>
 </Router>
 
 
 @code {
-    protected override void OnInitialized()
+    private UsuarioDto user;
+    protected async void RedirectTo()
     {
-        Navigation.NavigateTo("/login");
+        user = await Handler.GetUserAsync();
+
+        if (string.IsNullOrEmpty(user.Cpf))
+        {
+            Navigation.NavigateTo("/login");
+        }
+        else
+        {
+            Navigation.NavigateTo("/");
+        }
     }
 }

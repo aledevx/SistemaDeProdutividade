@@ -22,7 +22,7 @@ public class ProdutividadeFeita
     public Usuario? Usuario { get; set; }
     public DateTime DataCriacao { get; set; } = DateTime.Now;
     public bool Ativo { get; set; } = true;
-    public bool FaltasNaoJustificadas { get; set; } = false;
+    public decimal ValorDaProdutividade { get; set; }
     public bool SemAssinaturaServidor { get; set; } = false; //PARA CASO O SERVIDOR ESTEJA DE FÉRIAS
     public List<Assinatura> Assinaturas { get; set; } = [];
     public List<AtividadePontuada> Atividades { get; set; } = [];

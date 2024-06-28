@@ -71,7 +71,6 @@ public class ProdContext : DbContext
         builder.Entity<ProdutividadeFeita>().Property(p => p.DataCriacao).IsRequired();
         builder.Entity<ProdutividadeFeita>().Property(p => p.Status).HasConversion(v => v.ToString(), v => (StatusProdutividade)Enum.Parse(typeof(StatusProdutividade), v)).IsRequired();
         builder.Entity<ProdutividadeFeita>().Property(p => p.Ativo).IsRequired();
-        builder.Entity<ProdutividadeFeita>().Property(p => p.FaltasNaoJustificadas).IsRequired();
         builder.Entity<ProdutividadeFeita>().Property(p => p.SemAssinaturaServidor).IsRequired();
         builder.Entity<ProdutividadeFeita>().HasMany(p => p.Assinaturas);
         builder.Entity<ProdutividadeFeita>().HasMany(p => p.Atividades);
