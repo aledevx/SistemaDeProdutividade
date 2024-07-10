@@ -1,0 +1,32 @@
+﻿@inject IDialogService DialogService
+
+<MudDialog Style="padding: 10px;">
+    <DialogContent>
+        <MudText Style="white-space: pre-wrap;">
+            Ao devolver a produtividade, é necessário adicionar uma observação falando sobre o motivo da devolução. Ao confirmar, você declara que está ciente de que <b>o servidor terá que pontuar uma nova produtividade.</b>
+        </MudText> 
+        <MudTextField @bind-Value="observacao" Label="Observação" Variant="Variant.Outlined" Required="true" />
+    </DialogContent>
+    <DialogActions>
+        <MudButton Variant="Variant.Outlined" Color="Color.Error" Class="rounded-lg" OnClick="@Cancel">Cancelar</MudButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="rounded-lg" OnClick="@Accept">Confirmar</MudButton>
+    </DialogActions>
+</MudDialog>
+
+
+@code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; } = default!;
+    [Parameter] public EventCallback<string> OnConfirm { get; set; } = default!;
+    private string observacao;
+
+    private void Accept()
+    {
+        OnConfirm.InvokeAsync(observacao);
+        MudDialog.Close(DialogResult.Ok(true));
+    }
+
+    private void Cancel()
+    {
+        MudDialog.Cancel();
+    }
+}

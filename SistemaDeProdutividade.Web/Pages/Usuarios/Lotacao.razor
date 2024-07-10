@@ -1,0 +1,57 @@
+﻿@page "/usuarios/lotacao/{id:guid}"
+@inherits LotacaoUsuarioPage
+
+<PageTitle>Lotação</PageTitle>
+
+<MudContainer MinHeight="130px" Width="100%" Class="d-flex justify-space-between" >
+    <MudContainer MaxWidth="MaxWidth.Medium" Class="d-flex align-center">
+        <MudContainer Class="d-inline">
+            <MudText Typo="Typo.h4" Class="px-4">Cadastrar</MudText>
+            <MudText Typo="Typo.body2" Class="px-4 mud-text-secondary">Descrição das ações disponíveis na página</MudText>
+        </MudContainer>
+     </MudContainer>
+
+    <MudContainer MaxWidth="MaxWidth.Medium" Class="d-flex align-center justify-end gap-4">
+        <MudButton Variant="Variant.Outlined" OnClick="Voltar" Color="Color.Primary" Class="rounded-lg" Style="height: 44px; width: 150px;">Cancelar</MudButton>
+        @if (IsBusy)
+        {
+            <MudProgressCircular Indeterminate="true" Color="Color.Primary" />
+        }
+        else
+        {
+            <MudButton ButtonType="ButtonType.Submit" OnClick="OnValidSubmitAsync" Variant="Variant.Filled" Color="Color.Primary" Class="rounded-lg" Style="height: 44px; width: 150px;">Salvar</MudButton>
+        }
+      </MudContainer>
+</MudContainer>
+<br>
+<MudPaper MinHeight="650px" Width="100%" Class="py-12 px-6">
+    <MudContainer Class="d-flex" Fixed="true" Style="height: 130px;">
+        <MudContainer Style="width=45%;">
+            <MudText Typo="Typo.h6"> <b>@NomeUsuario</b></MudText>
+            <MudText Typo="Typo.body2">Matrícula: @MatriculaUsuario</MudText>
+            <MudText Typo="Typo.body2">Cargo atual: @CargoUsuario</MudText>
+            <MudText Typo="Typo.body2">Lotação atual: @SetorUsuario</MudText>
+        </MudContainer>
+        <MudContainer Style="width=45%;">
+
+        </MudContainer>
+    </MudContainer>      <br />
+    <MudSelect @bind-Value="CargoId" Label="Cargo" Variant="Variant.Outlined" Style="width: 50%;" Required="true" RequiredError="Selecione o Cargo">
+        <MudSelectItem T="Guid" Value="Guid.Empty">Selecionar</MudSelectItem>
+        @foreach (var cargo in Cargos)
+        {
+            <MudSelectItem T="Guid" Value="@cargo.Id">@cargo.Nome</MudSelectItem>
+        }
+    </MudSelect>
+    <br />
+    <MudSelect @bind-Value="SetorId" Label="Setor" Variant="Variant.Outlined" Required="true" RequiredError="Selecione o Setor" Style="width: 40%;">
+    <MudSelectItem T="Guid" Value="Guid.Empty">Selecionar</MudSelectItem>
+        @foreach (var setor in Setores)
+        {
+            <MudSelectItem T="Guid" Value="@setor.Id">@setor.Nome</MudSelectItem>
+        }
+    </MudSelect>
+    
+    <br/>
+</MudPaper>
+

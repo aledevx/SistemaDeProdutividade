@@ -61,6 +61,33 @@ namespace SistemaDeProdutividade.Exception {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a É necessário informar as Atividades responsáveis desta produtividade..
+        /// </summary>
+        public static string ATIVIDADE_NOT_NULL {
+            get {
+                return ResourceManager.GetString("ATIVIDADE_NOT_NULL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Já existe um mapa de produtividade cadastrado com esse Cargo..
+        /// </summary>
+        public static string CARGO_ALREADY_REGISTERED {
+            get {
+                return ResourceManager.GetString("CARGO_ALREADY_REGISTERED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a O cargo informado não está cadastrado em nosso banco de dados..
+        /// </summary>
+        public static string CARGO_NOT_FOUND {
+            get {
+                return ResourceManager.GetString("CARGO_NOT_FOUND", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Este CPF já está cadastrado no sistema..
         /// </summary>
         public static string CPF_ALREADY_REGISTERED {
@@ -75,6 +102,15 @@ namespace SistemaDeProdutividade.Exception {
         public static string CPF_INVALID {
             get {
                 return ResourceManager.GetString("CPF_INVALID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a O usuário não está lotado em nenhum setor..
+        /// </summary>
+        public static string LOTACAO_NOT_FOUND {
+            get {
+                return ResourceManager.GetString("LOTACAO_NOT_FOUND", resourceCulture);
             }
         }
         
@@ -97,11 +133,56 @@ namespace SistemaDeProdutividade.Exception {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a O perfil fornecido não existe em nosso sistema..
+        /// </summary>
+        public static string PERFIL_INVALID {
+            get {
+                return ResourceManager.GetString("PERFIL_INVALID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a O periodo informado é inválido, pois está sobrepondo o período de uma produtividade já cadastrada..
+        /// </summary>
+        public static string PERIOD_INVALID {
+            get {
+                return ResourceManager.GetString("PERIOD_INVALID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a A matrícula não pode estar vazia..
         /// </summary>
         public static string REGISTRATION_EMPTY {
             get {
                 return ResourceManager.GetString("REGISTRATION_EMPTY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Já existe um setor cadastrado com esse nome..
+        /// </summary>
+        public static string SETOR_ALREADY_REGISTERED {
+            get {
+                return ResourceManager.GetString("SETOR_ALREADY_REGISTERED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a O setor informado não está cadastrado em nosso banco de dados..
+        /// </summary>
+        public static string SETOR_NOT_FOUND {
+            get {
+                return ResourceManager.GetString("SETOR_NOT_FOUND", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a É necessário selecionar o tipo do setor..
+        /// </summary>
+        public static string TIPO_SETOR_NOT_NULL_OR_EMPTY {
+            get {
+                return ResourceManager.GetString("TIPO_SETOR_NOT_NULL_OR_EMPTY", resourceCulture);
             }
         }
         
@@ -129,6 +210,15 @@ namespace SistemaDeProdutividade.Exception {
         public static string USER_UNAUTHORIZED {
             get {
                 return ResourceManager.GetString("USER_UNAUTHORIZED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Insira um valor válido para a produtividade..
+        /// </summary>
+        public static string VALOR_PROD_INVALID {
+            get {
+                return ResourceManager.GetString("VALOR_PROD_INVALID", resourceCulture);
             }
         }
     }

@@ -1,14 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SistemaDeProdutividade.Domain.Repositories.Produtividade;
+using SistemaDeProdutividade.Domain.Repositories.Setor;
 using SistemaDeProdutividade.Domain.Repositories.Usuario;
 using SistemaDeProdutividade.Infrastructure.DataAccess;
 using SistemaDeProdutividade.Infrastructure.DataAccess.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SistemaDeProdutividade.Infrastructure;
 public static class DependencyInjectionExtension
@@ -31,5 +28,9 @@ public static class DependencyInjectionExtension
     {
         services.AddScoped<IUsuarioWriteOnlyRepository, UsuarioRepository>();
         services.AddScoped<IUsuarioReadOnlyRepository, UsuarioRepository>();
+        services.AddScoped<IProdutividadeWriteOnlyRepository, ProdutividadeRepository>();
+        services.AddScoped<IProdutividadeReadOnlyRepository, ProdutividadeRepository>();
+        services.AddScoped<ISetorWriteOnlyRepository, SetorRepository>();
+        services.AddScoped<ISetorReadOnlyRepository, SetorRepository>();
     }
 }

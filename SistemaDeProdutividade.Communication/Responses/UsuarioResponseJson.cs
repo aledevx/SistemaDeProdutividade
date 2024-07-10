@@ -1,8 +1,2 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SistemaDeProdutividade.Communication.Responses;
-public record UsuarioResponseJson(string Cpf, string Nome, string Perfil);
+﻿namespace SistemaDeProdutividade.Communication.Responses;
+public record UsuarioResponseJson(Guid Id, string Cpf, string Nome, string Perfil);

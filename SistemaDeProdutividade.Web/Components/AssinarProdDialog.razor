@@ -1,0 +1,28 @@
+﻿@inject IDialogService DialogService
+
+<MudDialog Style="padding: 10px;">
+    <DialogContent>
+        <MudText Style="white-space: pre-wrap;">
+            Ao clicar em "Confirmar", o sistema coletará os dados como "Nome" e "Cargo" para realizar a assinatura da produtividade. Ao prosseguir, você confirma que o percentual a receber pela produtividade está correto.
+        </MudText> 
+    </DialogContent>
+    <DialogActions>
+        <MudButton Variant="Variant.Outlined" Color="Color.Error" Class="rounded-lg" OnClick="@Cancel">Cancelar</MudButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="rounded-lg" OnClick="@Accept">Confirmar</MudButton>
+    </DialogActions>
+</MudDialog>
+
+
+@code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+
+    private void Accept()
+    {
+        MudDialog.Close(DialogResult.Ok(true));
+    }
+
+    private void Cancel()
+    {
+        MudDialog.Cancel();
+    }
+}

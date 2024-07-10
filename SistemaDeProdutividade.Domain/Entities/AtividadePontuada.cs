@@ -12,4 +12,14 @@ public class AtividadePontuada
     public int PontuacaoAtividade { get; set; }
     public int QtdRealizada { get; set; }
     public Guid ProdutividadeFeitaId { get; set; }
+    public AtividadePontuada(string descricao, int pontuacao, int qtd)
+    {
+        DescricaoAtividade = descricao;
+        PontuacaoAtividade = pontuacao;
+        QtdRealizada = qtd;
+    }
+    public AtividadePontuada()
+    {
+        
+    }
 }

@@ -19,7 +19,7 @@ public class LogarUsuarioUseCase : ILogarUsuarioUseCase
 
         var userData = _readOnlyRepository.BuscarUsuarioCpf(request.Cpf);
 
-        return new UsuarioResponseJson(userData.Result.Cpf, userData.Result.Nome, userData.Result.Perfil);
+        return new UsuarioResponseJson(userData.Result.Id, userData.Result.Cpf, userData.Result.Nome, userData.Result.Perfil);
     }
     private async Task Validate(LoginRequestJson request)
     {

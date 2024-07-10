@@ -9,4 +9,8 @@ public class ValorProd
 {
     public Guid Id { get; set; }
     public decimal Valor { get; set; }
+    public ValorProd(decimal valor)
+    {
+        Valor = valor;
+    }
 }

@@ -8,4 +8,5 @@ namespace SistemaDeProdutividade.Domain.Repositories.Usuario;
 public interface IUsuarioWriteOnlyRepository
 {
     Task Add(Entities.Usuario usuario);
+    Task LotarUsuario(Entities.Lotacao lotacao);
 }

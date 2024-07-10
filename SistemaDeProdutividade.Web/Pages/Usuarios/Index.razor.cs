@@ -1,39 +1,79 @@
 ﻿using Microsoft.AspNetCore.Components;
 using MudBlazor;
-using SistemaDeProdutividade.Communication.Requests.Produtividades;
+using SistemaDeProdutividade.Web.Handlers;
+using SistemaDeProdutividade.Web.Models;
 
 namespace SistemaDeProdutividade.Web.Pages;
 
 public partial class IndexUsuarioPage : ComponentBase
 {
     #region Properties
+    public bool dense = false;
+    public bool hover = true;
+    public bool striped = false;
+    public bool bordered = false;
+    public string searchString1 = "";
+    public UsuarioIndex selectedItem1 = null;
+    public HashSet<UsuarioIndex> selectedItems = new HashSet<UsuarioIndex>();
 
     public bool IsBusy { get; set; } = false;
-    public PontuarProdutividadeRequestJson InputModel { get; set; } = new();
+    public List<UsuarioIndex> Usuarios { get; set; } = [];
+    public int Qtd = 1;
+    #endregion
+    #region Services
+
+    [Inject]
+    public UsuarioHandler Handler { get; set; } = null!;
+    [Inject]
+    public NavigationManager navigationManager { get; set; } = null!;
+    [Inject]
+    public ISnackbar Snackbar { get; set; } = null!;
+
     #endregion
 
-    public string[] headings = { "nº", "Descrição da Atividade", "Peso", "Quantidade", "Subtotal" };
-    public string[] rows = {
-        @"1 DescriçãoTeste 3 10 30",
-        @"2 DescriçãoTeste 3 10 30",
-        @"3 DescriçãoTeste 3 10 30",
-        @"4 DescriçãoTeste 3 10 30",
-        @"5 DescriçãoTeste 3 10 30",
-        @"6 DescriçãoTeste 3 10 30",
-    };
-    public DateRange dateRange = new DateRange(DateTime.Now.AddDays(-30), DateTime.Now);
-    public DateTime today = DateTime.Now;
+    #region Methods
 
-    private void OnDateRangeChanged()
+    protected override async Task OnInitializedAsync()
     {
-        if (dateRange.End.HasValue)
+
+        IsBusy = true;
+        try
         {
-            dateRange = new DateRange(dateRange.Start, today);
+            var result = await Handler.BuscarTodos();
+            if (result.IsSuccess) 
+            {
+                Usuarios = result.Data!.Usuarios.Select(u => new UsuarioIndex(u.Id, u.Nome, u.Cpf, u.Matricula, Qtd++)).ToList();
+            }
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add(ex.Message, Severity.Error);
+        }
+        finally
+        {
+            IsBusy = false;
         }
     }
-    //protected override async Task OnInitializedAsync()
-    //{
-    //    IsBusy = true;
-        
-    //}
+    public bool FilterFunc1(UsuarioIndex usuario) => FilterFunc(usuario, searchString1);
+
+    public void NavigateToProfile(Guid id)
+    {
+        navigationManager.NavigateTo($"/usuarios/perfil/{id}");
+    }
+
+    public bool FilterFunc(UsuarioIndex usuario, string searchString)
+    {
+        if (string.IsNullOrWhiteSpace(searchString))
+            return true;
+        if (usuario.Nome.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        if (usuario.Cpf.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        if ($"{usuario.Matricula}".Contains(searchString))
+            return true;
+        return false;
+    }
+
+    #endregion
+
 }

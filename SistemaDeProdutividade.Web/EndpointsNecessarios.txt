@@ -1,28 +1,34 @@
 ﻿
 	PRODUTIVIDADE
--> GET produtividades/recebido {ListadeProdutividades<ProdId, Nº, NomeServidor, Setor, DataCriacao>}; obs:para chefe= status "aguardando assinatura", para adm="assinado pelo chefe"
--> GET produtividades/ {ListadeProdutividades<ProdId, Nº, NomeServidor, Cargo, DataCriacao, Status>}; obs: todas as prods no sistema
--> GET produtividades/pontuar {userId, ProdId, Nome, Matricula, Cargo, SetorLotado, ValorProd, ListaDeAtividadesDoCargo<AtvId, Descricao, Peso>} obs: talvez status com o status inicial
--> GET produtividades/minhas {ListadeProdutividades<ProdId, Nº, Cargo,  DataFim e DataInicial, DataCriacao, Status>}; obs: prods onde UsuarioId = id do usuario logado
--> GET produtividades/visualizar {userId, ProdId, Nome, Matricula, Cargo, SetorLotado, DataFim e DataInicial, DataCriacao, Status, ListaDeAtividadesDoCargo<Descricao, Peso, Qtd, SubTotal>};
+-> OK GET produtividades/recebido {ListadeProdutividades<ProdId, Nº, NomeServidor, Setor, DataCriacao>}; obs:para chefe= status "aguardando assinatura", para adm="assinado pelo chefe"
+-> OK GET produtividades/ {ListadeProdutividades<ProdId, Nº, NomeServidor, Cargo, DataCriacao, Status>}; obs: todas as prods no sistema
+-> OK GET produtividades/pontuar {userId, ProdId, Nome, Matricula, Cargo, SetorLotado, ValorProd, ListaDeAtividadesDoCargo<AtvId, Descricao, Peso>} obs: talvez status com o status inicial
+-> OK GET produtividades/minhas {ListadeProdutividades<ProdId, Nº, Cargo,  DataFim e DataInicial, DataCriacao, Status>}; obs: prods onde UsuarioId = id do usuario logado
+-> OK GET produtividades/visualizar {userId, ProdId, Nome, Matricula, Cargo, SetorLotado, DataFim e DataInicial, DataCriacao, Status, ListaDeAtividadesDoCargo<Descricao, Peso, Qtd, SubTotal>};
 -> GET produtividades/maps { ListaDeMapasProd<IdMapaProd, NomeCargo> }; 
--> POST produtividades/cadastrar { Cargo, ValorProd, ListaAtividades<Descricao, Peso> };
+-> OK POST produtividades/cadastrar { Cargo, ValorProd, ListaAtividades<Descricao, Peso> };
 -> GET produtividades/mapas/visualizar { IdMapaProd, Cargo, ListaAtividades<Descricao, Peso> };
--> POST produtividades/pontuar { userId, DataInicio, DataFim, ValorProd, ListaDeAtividadesPontuadas<Descricao, Peso, Qtd> }; obs: maioria das info tem no banco pelo userId
--> POST produtividades/assinar { userId, ProdId, PorcentagemDoValorDaProd };
--> UPDATE produtividades/devolver { ProdId, userId, Observacao }
--> UPDATE produtividades/finalizar { ProdId, userId }
+-> OK POST produtividades/pontuar { userId, DataInicio, DataFim, ValorProd, ListaDeAtividadesPontuadas<Descricao, Peso, Qtd> }; obs: maioria das info tem no banco pelo userId
+-> OK POST produtividades/assinar { userId, ProdId, PorcentagemDoValorDaProd };
+-> OK PUT produtividades/devolver { ProdId, userId, Observacao }
+-> OK PUT produtividades/finalizar { ProdId, userId }
 
 	SETOR
--> GET setores/ { ListaSetores<SetorId, Nome> };
--> POST setores/cadastrar { Nome, Tipo, SetorChefeId? };
+-> OK GET setores/ { ListaSetores<SetorId, Nome> };
+-> OK GET setores/visualizar { Nome, Tipo, SetorChefeId? };
+-> OK POST setores/cadastrar { Nome, Tipo, SetorChefeId? };
+-> POST setores/addchefia { SetorId, UsuarioId, cpfUsuarioLogado };
 
 	CARGO
--> GET cargos/ { CargoId, Nome };
+-> OK GET cargos/ { ListaCargos<CargoId, Nome> };
 
 	USUARIO
--> GET usuarios/ { ListaDeUsuarios<userId, Nome, Cpf, Matricula, Status> };
--> GET usuarios/perfil {userId, Nome, Matricula, Cargo, SetorLotado, ListaDeProdutividades<ProdID, Nº, Cargo, DataFim e DataInicial, DataCriacao, Status>};
--> POST usuarios/cadastrar { Nome, Cpf, Matricula, CargoId, SetorId };
--> UPDATE usuarios/editar { userId, Nome, Cpf, Matricula, Perfil };
--> POST usuarios/novalotacao { userId, CargoId, SetorId };
+-> OK GET usuarios/ { ListaDeUsuarios<userId, Nome, Cpf, Matricula, Status> }; 
+-> OK GET usuarios/perfil {userId, Nome, Matricula, Cargo, SetorLotado, ListaDeProdutividades<ProdID, Nº, Cargo, DataFim e DataInicial, DataCriacao, Status>};
+-> OK POST usuarios/cadastrar { Nome, Cpf, Matricula, Perfil, CargoId, SetorId };
+-> PUT usuarios/editar { userId, Nome, Cpf, Matricula, Perfil };
+-> OK POST usuarios/novalotacao { userId, CargoId, SetorId };
+
+ÚLTIMA TAREFA DEIXADA: FINALIZAR O INDEX DE MAPAS DE PROD E CORRIGIR TODOS OS BOTÕES "VOLTAR" "CANCELAR" DO SISTEMA
+
+OBS: NÃO ESQUECER DE IMPLEMENTAR A PARTE DE ADD UM CHEFE PARA UM SETOR ESPECÍFICO, DE PREFERÊNCIA CRIAR UM BOTÃO "ADD CHEFIA" NA PARTE DE VISUALIZAR SETOR

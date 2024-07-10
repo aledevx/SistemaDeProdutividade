@@ -1,9 +1,5 @@
 ﻿@page "/produtividades/recebido"
-@using System.Net.Http.Json
-@using SistemaDeProdutividade.Web.Models
-@using SistemaDeProdutividade.Web.Models.Produtividades
-@using SistemaDeProdutividade.Web.Models.Setores
-@inject NavigationManager Navigation
+@using SistemaDeProdutividade.Communication.ViewModel.Produtividades
 @inherits RecebidoProdPage
 
 <PageTitle>Caixa de entrada</PageTitle>
@@ -22,7 +18,7 @@
 </MudContainer>
 <br>
 <MudPaper MinHeight="350px" Width="100%" Class="py-12 px-6">
-    <MudTable Items="@ProdutividadesFeitas" Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped" Filter="new Func<ProdRecebidaIndex,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
+    <MudTable Items="@Produtividades" T="ProdFeitaIndexVM" Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped" Filter="new Func<ProdFeitaIndexVM,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
         <ToolBarContent>
             <MudText Typo="Typo.h6">Produtividades</MudText>
             <MudSpacer />
@@ -31,16 +27,18 @@
         <HeaderContent>
             <MudTh>nº</MudTh>
             <MudTh>Servidor</MudTh>
+            <MudTh>Cargo</MudTh>
             <MudTh>Setor</MudTh>
             <MudTh>Criado em</MudTh>
             <MudTh></MudTh>
         </HeaderContent>
         <RowTemplate>
-            <MudTd DataLabel="Nº">@context.Code</MudTd>
+            <MudTd DataLabel="Nº">@context.Codigo</MudTd>
             <MudTd DataLabel="Nome">@context.NomeUsuario</MudTd>
-            <MudTd DataLabel="Nº">@context.Setor</MudTd>
+            <MudTd DataLabel="Nome">@context.Cargo</MudTd>
+            <MudTd DataLabel="Nº">@context.Lotacao</MudTd>
             <MudTd DataLabel="Nome">@context.DataCriacao</MudTd>
-            <MudTd><MudButton Variant="Variant.Filled" Size="Size.Small" Color="Color.Tertiary" OnClick="() => NavigateToProfile()">Visualizar</MudButton></MudTd>
+            <MudTd><MudButton Variant="Variant.Filled" Size="Size.Small" Color="Color.Tertiary" OnClick="() => NavigateToProfile(context.Id)">Visualizar</MudButton></MudTd>
             </RowTemplate>
         <PagerContent>
             <MudTablePager />
@@ -48,41 +46,3 @@
     </MudTable>
 
 </MudPaper>
-@code {
-    private bool dense = false;
-    private bool hover = true;
-    private bool striped = false;
-    private bool bordered = false;
-    private string searchString1 = "";
-    private ProdRecebidaIndex selectedItem1 = null;
-    private HashSet<ProdRecebidaIndex> selectedItems = new HashSet<ProdRecebidaIndex>();
-
-    private IEnumerable<ProdRecebidaIndex> ProdutividadesFeitas = new List<ProdRecebidaIndex>()
-    {
-        new ProdRecebidaIndex("A123","Alexandre da Silva Oliveira", "Gerência de Tecnologia da Informação",  new DateTime(2024,8,1,9,45,25)),
-        new ProdRecebidaIndex("B223","João de Oliveira Santos", "Coordenadoria de Recursos Humanos",  new DateTime(2024,8,1,9,45,25)),
-        new ProdRecebidaIndex("A442","Maria Joaquina", "Gerência de Tecnologia da Informação",  new DateTime(2024,8,1,9,45,25)),
-        new ProdRecebidaIndex("C541","Arnold", "Gabinete",  new DateTime(2024,8,1,9,45,25)),
-    };
-
-    private bool FilterFunc1(ProdRecebidaIndex prod) => FilterFunc(prod, searchString1);
-
-    private void NavigateToProfile()
-    {
-        Navigation.NavigateTo($"/produtividades/visualizar");
-    }
-
-    private bool FilterFunc(ProdRecebidaIndex prod, string searchString)
-    {
-        if (string.IsNullOrWhiteSpace(searchString))
-            return true;
-        if (prod.Setor.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-            return true;
-        if (prod.Code.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-            return true;
-            return true;
-        if ($"{prod.DataCriacao}".Contains(searchString))
-            return true;
-        return false;
-    }
-    }

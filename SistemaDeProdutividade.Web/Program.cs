@@ -14,6 +14,8 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(WebConfi
 
 builder.Services.AddTransient<UsuarioHandler>();
 builder.Services.AddScoped<AuthHandler>();
+builder.Services.AddTransient<ProdutividadeHandler>();
+builder.Services.AddTransient<SetorHandler>();
 
 
 await builder.Build().RunAsync();

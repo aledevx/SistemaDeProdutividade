@@ -1,9 +1,5 @@
 ﻿@page "/produtividades/minhas"
-@using System.Net.Http.Json
-@using SistemaDeProdutividade.Web.Models
-@using SistemaDeProdutividade.Web.Models.Produtividades
-@using SistemaDeProdutividade.Web.Models.Setores
-@inject NavigationManager Navigation
+@using SistemaDeProdutividade.Communication.ViewModel.Produtividades
 @inherits MinhasProdPage
 
 <PageTitle>Minhas produtividades</PageTitle>
@@ -22,7 +18,7 @@
 </MudContainer>
 <br>
 <MudPaper MinHeight="350px" Width="100%" Class="py-12 px-6">
-    <MudTable Items="@ProdutividadesFeitas" Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped" Filter="new Func<UsuarioProdIndex,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
+    <MudTable Items="@Produtividades" T="ProdFeitaIndexVM" Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped" Filter="new Func<ProdFeitaIndexVM,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
         <ToolBarContent>
             <MudText Typo="Typo.h6">Produtividades</MudText>
             <MudSpacer />
@@ -31,18 +27,16 @@
         <HeaderContent>
             <MudTh>nº</MudTh>
             <MudTh>Cargo</MudTh>
-            <MudTh>Atividade realizada em</MudTh>
             <MudTh>Criado em</MudTh>
             <MudTh>Status</MudTh>
             <MudTh></MudTh>
         </HeaderContent>
         <RowTemplate>
-            <MudTd DataLabel="nº">@context.Code</MudTd>
+            <MudTd DataLabel="nº">@context.Codigo</MudTd>
             <MudTd DataLabel="Cargo">@context.Cargo</MudTd>
-            <MudTd DataLabel="Atividade realizada em">@context.DataInicial.ToString("dd/MM/yyyy") à @context.DataFinal.ToString("dd/MM/yyyy")</MudTd>
             <MudTd DataLabel="Criado em">@context.DataCriacao</MudTd>
             <MudTd DataLabel="Status">@context.Status</MudTd>
-            <MudTd><MudButton Variant="Variant.Filled" Size="Size.Small" Color="Color.Tertiary" OnClick="() => NavigateToProfile()">Visualizar</MudButton></MudTd>
+            <MudTd><MudButton Variant="Variant.Filled" Size="Size.Small" Color="Color.Tertiary" OnClick="() => NavigateToProfile(context.Id)">Visualizar</MudButton></MudTd>
             </RowTemplate>
         <PagerContent>
             <MudTablePager />
@@ -50,43 +44,3 @@
     </MudTable>
 
 </MudPaper>
-@code {
-    private bool dense = false;
-    private bool hover = true;
-    private bool striped = false;
-    private bool bordered = false;
-    private string searchString1 = "";
-    private UsuarioProdIndex selectedItem1 = null;
-    private HashSet<UsuarioProdIndex> selectedItems = new HashSet<UsuarioProdIndex>();
-
-    private IEnumerable<UsuarioProdIndex> ProdutividadesFeitas = new List<UsuarioProdIndex>()
-    {
-        new UsuarioProdIndex("A123","Gerente de Contabilidade", new DateTime(2024,6,30), new DateTime(2024,7,29), new DateTime(2024,8,1,9,45,25), "Aguardando assinatura"),
-        new UsuarioProdIndex("B226","Gerente de Contabilidade", new DateTime(2024,6,30), new DateTime(2024,7,29), new DateTime(2024,8,1,9,45,25), "Indeferido"),
-        new UsuarioProdIndex("A445","Gerente de Contabilidade", new DateTime(2024,6,30), new DateTime(2024,7,29), new DateTime(2024,8,1,9,45,25), "Finalizado"),
-        new UsuarioProdIndex("C464","Gerente de Contabilidade", new DateTime(2024,6,30), new DateTime(2024,7,29), new DateTime(2024,8,1,9,45,25), "Finalizado"),
-        new UsuarioProdIndex("D348","Assessor V", new DateTime(2024,6,30), new DateTime(2024,7,29), new DateTime(2024,8,1,9,45,25), "Finalizado")
-    };
-
-    private bool FilterFunc1(UsuarioProdIndex prod) => FilterFunc(prod, searchString1);
-
-    private void NavigateToProfile()
-    {
-        Navigation.NavigateTo($"/produtividades/visualizar");
-    }
-
-    private bool FilterFunc(UsuarioProdIndex prod, string searchString)
-    {
-        if (string.IsNullOrWhiteSpace(searchString))
-            return true;
-        if (prod.Cargo.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-            return true;
-        if (prod.Code.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-            return true;
-        if (prod.Status.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-            return true;
-        if ($"{prod.DataCriacao}".Contains(searchString))
-            return true;
-        return false;
-    }
-    }

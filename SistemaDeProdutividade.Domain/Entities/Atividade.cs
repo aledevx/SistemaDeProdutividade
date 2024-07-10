@@ -12,4 +12,9 @@ public class Atividade
     public int Pontuacao { get; }
     public Guid ProdutividadeId { get; }
     public Produtividade? Produtividade { get; set; }
+    public Atividade(string descricao, int pontuacao)
+    {
+        Descricao = descricao;
+        Pontuacao = pontuacao;
+    }
 }

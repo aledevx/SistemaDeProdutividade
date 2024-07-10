@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.JSInterop;
+using SistemaDeProdutividade.Communication.Responses;
 using SistemaDeProdutividade.Web.DTOs;
 using SistemaDeProdutividade.Web.Requests;
 using SistemaDeProdutividade.Web.Responses;
@@ -123,5 +124,9 @@ public class AuthHandler
         await _jsRuntime.InvokeVoidAsync("blazorExtensions.deleteCookie", "LastName");
         await _jsRuntime.InvokeVoidAsync("blazorExtensions.deleteCookie", "Cpf");
         await _jsRuntime.InvokeVoidAsync("blazorExtensions.deleteCookie", "Perfil");
+    }
+    public async Task Voltar() 
+    {
+        await _jsRuntime.InvokeVoidAsync("blazorExtensions.navigateBack");
     }
 }

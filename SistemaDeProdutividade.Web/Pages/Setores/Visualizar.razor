@@ -1,12 +1,8 @@
-﻿@page "/setores/visualizar"
+﻿@page "/setores/visualizar/{id:guid}"
+@using SistemaDeProdutividade.Communication.ViewModel.Setores
 @inherits SetorVisualizarPage
-@using System.Net.Http.Json
-@using SistemaDeProdutividade.Web.Models
-@using SistemaDeProdutividade.Web.Models.Setores
-@inject NavigationManager Navigation
-@inject HttpClient httpClient
 
-<PageTitle>Home 2</PageTitle>
+<PageTitle>Setor Detalhes</PageTitle>
 
 <MudContainer MinHeight="130px" Width="100%" Class="d-flex justify-space-between" >
     <MudContainer MaxWidth="MaxWidth.Medium" Class="d-flex align-center">
@@ -23,36 +19,37 @@
 <MudPaper MinHeight="350px" Width="100%" Class="py-12 px-6">
     <MudContainer Class="d-flex" Fixed="true" Style="height: 130px;" >
         <MudContainer Style="width=45%;">
-            <MudText Typo="Typo.h6"> <b>@modelData.Nome</b></MudText>
-            <MudText Typo="Typo.body2">Chefe atual: @modelData.Chefe</MudText>
-            <MudText Typo="Typo.body2">Subordinado à(ao) @modelData.SetorChefe</MudText>
+            <MudText Typo="Typo.h6"> <b>@SetorData.Nome</b></MudText>
+            <MudText Typo="Typo.body2"> <b>Chefe atual: @SetorData.Chefe </b> </MudText>
+            @if (!(string.IsNullOrEmpty(SetorData.SetorChefe)))
+            {
+                <MudText Typo="Typo.body2">Subordinado à(ao) @SetorData.SetorChefe</MudText>
+            }
         </MudContainer>
         <MudContainer Style="width=45%;">
 
         </MudContainer>
     </MudContainer>
     <MudContainer Fixed="true" Style="min-height: 80px">
-        <MudTable Items="@modelData.UsuariosLotados" Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped" Filter="new Func<UsuarioIndex,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
+        <MudTable Items="@UsuariosLotados" Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped" Filter="new Func<IndexUsuarioSetorVM,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
             <ToolBarContent>
-                <MudText Typo="Typo.h6">Usuários Lotados</MudText>
+                <MudText Typo="Typo.h6">Usuários Lotados Atualmente</MudText>
                 <MudSpacer />
                 <MudTextField @bind-Value="searchString1" Placeholder="Buscar" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
             </ToolBarContent>
             <HeaderContent>
-                <MudTh>Nº</MudTh>
                 <MudTh>Nome</MudTh>
-                <MudTh>Cpf</MudTh>
+                <MudTh>Cargo</MudTh>
                 <MudTh>Matrícula</MudTh>
                 <MudTh>Status</MudTh>
                 <MudTh></MudTh>
             </HeaderContent>
             <RowTemplate>
-                <MudTd DataLabel="Nº">@context.Id</MudTd>
                 <MudTd DataLabel="Nome">@context.Nome</MudTd>
-                <MudTd DataLabel="Cpf">@context.Cpf</MudTd>
+                <MudTd DataLabel="Nº">@context.Cargo</MudTd>
                 <MudTd DataLabel="Matrícula">@context.Matricula</MudTd>
-                <MudTd DataLabel="Status">@((@context.Ativado) ? "Ativado" : "Desativado")</MudTd>
-                <MudTd><MudButton Variant="Variant.Filled" Size="Size.Small" Color="Color.Tertiary" OnClick="() => NavigateToProfile()">Visualizar</MudButton></MudTd>
+                @* <MudTd DataLabel="Status">@((@context.Ativado) ? "Ativado" : "Desativado")</MudTd> *@
+                <MudTd><MudButton Variant="Variant.Filled" Size="Size.Small" Color="Color.Tertiary" OnClick="() => NavigateToProfile(context.Id)">Visualizar</MudButton></MudTd>
             </RowTemplate>
             <PagerContent>
                 <MudTablePager />
@@ -60,81 +57,3 @@
         </MudTable>
     </MudContainer>
 </MudPaper>
-@code {
-    private bool dense = false;
-    private bool hover = true;
-    private bool striped = false;
-    private bool bordered = false;
-    private string searchString1 = "";
-    private UsuarioIndex selectedItem1 = null;
-    private HashSet<UsuarioIndex> selectedItems = new HashSet<UsuarioIndex>();
-    private SetorDetalhes modelData { get; set; } = new();
-
-
-    private IEnumerable<UsuarioIndex> Usuarios = new List<UsuarioIndex>()
-    {
-        new UsuarioIndex()
-        {
-          Id=1,
-          Nome="Alexandre Oliveira",
-          Cpf="030.901.952-40",
-          Matricula="300173634",
-          Ativado=true
-        },
-        new UsuarioIndex()
-        {
-          Id=1,
-          Nome="Leonardo Santos",
-          Cpf="030.901.952-40",
-          Matricula="300173634",
-          Ativado=false
-        },
-        new UsuarioIndex()
-        {
-          Id=1,
-          Nome="João Vitor",
-          Cpf="030.901.952-40",
-          Matricula="300173634",
-          Ativado=true
-        },
-        new UsuarioIndex()
-        {
-          Id=1,
-          Nome="Idan",
-          Cpf="030.901.952-40",
-          Matricula="300173634",
-          Ativado=false
-        },
-    };
-
-    protected override async Task OnInitializedAsync()
-    {
-
-        modelData.Nome = "Gerência de Tecnologia da Informação";
-        modelData.SetorChefe = "Gabinete";
-        modelData.Chefe = "Fulano de tal";
-        modelData.TipoSetor = "Gerência";
-        modelData.UsuariosLotados = Usuarios;
-
-    }
-
-    private bool FilterFunc1(UsuarioIndex usuario) => FilterFunc(usuario, searchString1);
-
-    private void NavigateToProfile()
-    {
-        Navigation.NavigateTo($"/usuarios/perfil");
-    }
-
-    private bool FilterFunc(UsuarioIndex usuario, string searchString)
-    {
-        if (string.IsNullOrWhiteSpace(searchString))
-            return true;
-        if (usuario.Nome.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-            return true;
-        if (usuario.Cpf.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-            return true;
-        if ($"{usuario.Matricula}".Contains(searchString))
-            return true;
-        return false;
-    }
-}

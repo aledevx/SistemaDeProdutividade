@@ -7,6 +7,6 @@ public class SetorDetalhes
     public string TipoSetor { get; set; } = string.Empty;
     public string? Chefe { get; set; } = string.Empty;
     public string? SetorChefe { get; set; } = string.Empty;
-    public IEnumerable<UsuarioIndex> UsuariosLotados { get; set; } = [];
+    public List<UsuarioIndex> UsuariosLotados { get; set; } = [];
 
 }

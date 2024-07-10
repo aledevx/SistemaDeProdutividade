@@ -231,9 +231,6 @@ namespace SistemaDeProdutividade.API.Migrations
                     b.Property<DateTime>("DataInicio")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("FaltasNaoJustificadas")
-                        .HasColumnType("bit");
-
                     b.Property<string>("MatriculaUsuario")
                         .IsRequired()
                         .HasMaxLength(20)
@@ -245,6 +242,11 @@ namespace SistemaDeProdutividade.API.Migrations
                         .HasMaxLength(250)
                         .IsUnicode(false)
                         .HasColumnType("varchar(250)");
+
+                    b.Property<string>("Observacao")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<bool>("SemAssinaturaServidor")
                         .HasColumnType("bit");
@@ -262,6 +264,9 @@ namespace SistemaDeProdutividade.API.Migrations
                     b.Property<Guid>("UsuarioId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<decimal>("ValorDaProdutividade")
+                        .HasColumnType("decimal(10,2)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("UsuarioId");
@@ -273,9 +278,6 @@ namespace SistemaDeProdutividade.API.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("AssinanteResponsavelId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("ChefeId")

@@ -1,5 +1,4 @@
 ﻿@page "/produtividades/cadastrar"
-@using System.Globalization
 @inherits CadastrarProdutividadePage
 
 <PageTitle>Cadastrar</PageTitle>
@@ -7,27 +6,27 @@
 <MudContainer MinHeight="130px" Width="100%" Class="d-flex justify-space-between" >
     <MudContainer MaxWidth="MaxWidth.Medium" Class="d-flex align-center">
         <MudContainer Class="d-inline">
-            <MudText Typo="Typo.h4" Class="px-4">Cadastrar Produtividade</MudText>
-            <MudText Typo="Typo.body2" Class="px-4 mud-text-secondary">Insira as produtividades a serem realizadas por cargo</MudText>
+            <MudText Typo="Typo.h4" Class="px-4">Cadastrar Mapa de Produtividade</MudText>
+            <MudText Typo="Typo.body2" Class="px-4 mud-text-secondary">Insira o cargo e as atividades de responsabilidade do mesmo</MudText>
         </MudContainer>
      </MudContainer>
 
     <MudContainer MaxWidth="MaxWidth.Medium" Class="d-flex align-center justify-end gap-4">
         <MudButton Variant="Variant.Outlined" Color="Color.Primary" Class="rounded-lg" Style="height: 44px; width: 150px;">Cancelar</MudButton>
-        <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="rounded-lg" Style="height: 44px; width: 150px;">Salvar</MudButton>
+        <MudButton ButtonType="ButtonType.Submit" OnClick="OnValidSubmitAsync" Variant="Variant.Filled" Color="Color.Primary" Class="rounded-lg" Style="height: 44px; width: 150px;">Salvar</MudButton>
       </MudContainer>
 </MudContainer>
 <br>
 <MudPaper MinHeight="350px" Width="100%" Class="py-12 px-6">
     <MudContainer Class="d-flex gap-4">
         <MudContainer Class="d-flex" Style="width: 75%;">
-            <MudTextField @bind-Value="InputModel.Cargo"
+            <MudTextField @bind-Value="Cargo"
                           Label="Cargo"
                           Variant="Variant.Outlined"
                           Required="true" RequiredError="Nome do Cargo não pode ficar em branco!"></MudTextField>
         </MudContainer>
         <MudContainer Class="d-flex" Style="width: 20%;">
-            <MudNumericField Immediate="false" Label="Valor" Format="N2" Culture="@_br" T="decimal" @bind-Value="InputModel.Valor"/>
+            <MudNumericField Immediate="false" Label="Valor" Format="N2" Culture="@_br" T="decimal" @bind-Value="ValorProd"/>
         </MudContainer>
        
        
@@ -44,17 +43,17 @@
         </MudPaper>
     </MudContainer>
     <MudContainer Fixed="true" Style="min-height: 80px;">
-        <MudTable Items="tasks" Style="overflow-x: auto;">
+        <MudTable Items="todoAtividades" Style="overflow-x: auto;">
             <HeaderContent>
               <MudTh>nº</MudTh>
               <MudTh>Descrição da Atividade</MudTh>
-              <MudTh>Quantidade</MudTh>
+              <MudTh>Peso</MudTh>
               <MudTh></MudTh>
               </HeaderContent>
                     <RowTemplate>
                         <MudTd DataLabel="nº">@numContador</MudTd>
-                        <MudTd DataLabel="Descrição da Atividade">@context.Description</MudTd>
-                        <MudTd DataLabel="Quantidade">@context.Quantity</MudTd>
+                        <MudTd DataLabel="Descrição da Atividade">@context.Descricao</MudTd>
+                        <MudTd DataLabel="Peso">@context.Pontuacao</MudTd>
                         <MudTd DataLabel="Ações">
                             <MudButton Variant="Variant.Filled" Color="Color.Error" OnClick="() => RemoveTask(context)">Remover</MudButton>
                         </MudTd>
@@ -62,33 +61,3 @@
         </MudTable>
     </MudContainer>
 </MudPaper>
-
-@code {
-    public CultureInfo _br = CultureInfo.GetCultureInfo("pt-BR");
-    private int numContador = 0;
-    private string newTaskDescription;
-    private int newTaskQuantity = 1;
-    private List<TaskItem> tasks = new List<TaskItem>();
-
-    private void AddTask()
-    {
-        if (!string.IsNullOrWhiteSpace(newTaskDescription) && newTaskQuantity >= 1)
-        {
-            numContador++;
-            tasks.Add(new TaskItem { Description = newTaskDescription, Quantity = newTaskQuantity });
-            newTaskDescription = string.Empty;
-            newTaskQuantity = 1;
-        }
-    }
-
-    private void RemoveTask(TaskItem task)
-    {
-        tasks.Remove(task);
-    }
-
-    private class TaskItem
-    {
-        public string Description { get; set; }
-        public int Quantity { get; set; }
-    }
-}

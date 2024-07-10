@@ -14,7 +14,7 @@ public class EditarProdutividadeRequestJson
     public DateTime DataFim { get; set; }
     public DateTime DataCriacao { get; set; }
 
-    public List<AtividadePontuadaDTO> AtividadesPontuadas = [];
+    public List<AtividadePontuadaWebDTO> AtividadesPontuadas = [];
 
     public EditarProdutividadeRequestJson(string code, string nomeUsuario,
         string matriculaUsuario,

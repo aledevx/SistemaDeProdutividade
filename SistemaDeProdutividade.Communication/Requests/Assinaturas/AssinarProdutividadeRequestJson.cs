@@ -1,2 +1,2 @@
 ﻿namespace SistemaDeProdutividade.Communication.Requests.Assinaturas;
-public record AssinarProdutividadeRequestJson(Guid ProdId, Guid UsuarioId);
+public record AssinarProdutividadeRequestJson(Guid ProdId, string CpfAssinante, int Percentual);

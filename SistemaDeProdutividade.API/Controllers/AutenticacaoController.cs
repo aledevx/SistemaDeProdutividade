@@ -38,7 +38,7 @@ public class AutenticacaoController : ControllerBase
         //return Ok(new UsuarioResponseJson(result.Cpf, result.Nome, result.Perfil));
 
 
-        return Ok(new Response<UsuarioResponseJson>(new UsuarioResponseJson(result.Cpf, result.Nome, result.Perfil), 200, "Logado com sucesso"));
+        return Ok(new Response<UsuarioResponseJson>(new UsuarioResponseJson(result.Id ,result.Cpf, result.Nome, result.Perfil), 200, "Logado com sucesso"));
 
     }
     [HttpPost("logout")]

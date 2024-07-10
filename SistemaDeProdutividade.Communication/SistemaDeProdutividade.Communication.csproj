@@ -7,14 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Requests\Usuarios\" />
-    <Folder Include="Requests\Setores\" />
+    <Folder Include="DTOs\Produtividades\" />
+    <Folder Include="DTOs\Setores\" />
+    <Folder Include="DTOs\Usuarios\" />
     <Folder Include="Responses\Assinaturas\" />
     <Folder Include="Responses\Historicos\" />
     <Folder Include="Responses\Lotacoes\" />
-    <Folder Include="Responses\Setores\" />
-    <Folder Include="Responses\Produtividades\" />
-    <Folder Include="Responses\Usuarios\" />
   </ItemGroup>
 
 </Project>

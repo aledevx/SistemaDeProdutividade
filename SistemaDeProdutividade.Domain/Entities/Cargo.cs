@@ -8,5 +8,9 @@ namespace SistemaDeProdutividade.Domain.Entities;
 public class Cargo
 {
     public Guid Id { get; }
-    public string Nome { get; set; } = string.Empty;
+    public string Nome { get; set; }
+    public Cargo(string nome)
+    {
+        Nome = nome;
+    }
 }

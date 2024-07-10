@@ -2,9 +2,17 @@
 
 public class UsuarioIndex
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
     public string Nome { get; set; }
     public string Cpf { get; set; }
     public string Matricula { get; set; }
-    public bool Ativado { get; set; }
+    public int Numero { get; set; }
+    public UsuarioIndex(Guid id, string nome, string cpf, string matricula, int numero)
+    {
+        Id = id;
+        Nome = nome;
+        Cpf = cpf;
+        Matricula = matricula;
+        Numero = numero;
+    }
 }

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using MudBlazor;
+using SistemaDeProdutividade.Communication.Requests.Usuarios;
 using SistemaDeProdutividade.Web.Handlers;
-using SistemaDeProdutividade.Web.Requests;
 
 namespace SistemaDeProdutividade.Web.Pages;
 
@@ -10,7 +10,7 @@ public partial class InserirUsuarioPage : ComponentBase
     #region Properties
     public string[] perfis = { "Servidor", "Chefe", "Admin" };
     public bool IsBusy { get; set; } = false;
-    public InserirUsuarioRequestJson InputModel { get; set; } = new();
+    public InsetirUsuarioRequestJson InputModel { get; set; } = new();
 
     #endregion
 
@@ -33,7 +33,7 @@ public partial class InserirUsuarioPage : ComponentBase
 
         try
         {
-            var result = await Handler.CadastrarAsync(InputModel);
+            var result = await Handler.InserirAsync(InputModel);
             if (result.IsSuccess)
             {
                 Snackbar.Add("Usuário cadastrado com sucesso", Severity.Success);

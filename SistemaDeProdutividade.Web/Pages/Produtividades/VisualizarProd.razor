@@ -1,9 +1,7 @@
-﻿@page "/produtividades/visualizar"
-@using SistemaDeProdutividade.Web.DTOs
-@using SistemaDeProdutividade.Web.Handlers
-@using SistemaDeProdutividade.Web.Models
+﻿@page "/produtividades/visualizar/{id:guid}"
+@using SistemaDeProdutividade.Communication.DTOs.Assinaturas
+@using SistemaDeProdutividade.Web.DTOs.Atividades
 @inherits VisualizarProdPage
-@inject AuthHandler authHandler;
 
 <PageTitle>Visualizar produtividade</PageTitle>
 
@@ -11,42 +9,69 @@
     <MudContainer MaxWidth="MaxWidth.Medium" Class="d-flex align-center">
         <MudContainer Class="d-inline">
             <MudText Typo="Typo.h4" Class="px-4">Detalhes</MudText>
-            <MudText Typo="Typo.body2" Class="px-4 mud-text-secondary">Visualize todas as informações da produtividade selecionada</MudText>
+            @if (usuarioLogado != null)
+            {
+                @if (usuarioLogado.Perfil == "Admin" && ProdFeita.Status == Domain.Enums.StatusProdutividade.AguardandoRh)
+                {
+                    <MudText Typo="Typo.body2" Class="px-4 mud-text-secondary">Verifique os dados da produtividade recebida e finalize ou devolva para o usuário caso exista alguma irregularidade</MudText>
+                }
+                else if (usuarioLogado.Perfil == "Chefe" && ProdFeita.Status == Domain.Enums.StatusProdutividade.AguardandoAssinaturaChefe)
+                {
+                    <MudText Typo="Typo.body2" Class="px-4 mud-text-secondary">Verifique os dados da produtividade recebida, <b>informe o percentual a receber</b> pela produtividade no final da página e depois assine a produtividade</MudText>
+                }
+                else
+                {
+                    <MudText Typo="Typo.body2" Class="px-4 mud-text-secondary">Visualize todas as informações da produtividade selecionada</MudText>
+                }
+            }
         </MudContainer>
      </MudContainer>
 
     <MudContainer MaxWidth="MaxWidth.Medium" Class="d-flex align-center justify-end gap-4">
-        @if (user.Perfil == "Admin")
+        <MudButton Variant="Variant.Outlined" OnClick="Voltar" Color="Color.Primary" Class="rounded-lg" Style="height: 44px; width: 150px;">Voltar</MudButton>
+        @if (usuarioLogado != null)
         {
-            <MudButton Variant="Variant.Filled" Color="Color.Error" Class="rounded-lg" Style="height: 44px; width: 150px;">Devolver</MudButton>
-            <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="rounded-lg" Style="height: 44px; width: 150px;">Finalizar</MudButton>
+            @if (usuarioLogado.Perfil == "Admin" && ProdFeita.Status == Domain.Enums.StatusProdutividade.AguardandoRh)
+            {
+                <MudButton OnClick="OpenDialogDevolver" Variant="Variant.Filled" Color="Color.Error" Class="rounded-lg" Style="height: 44px; width: 150px;">Devolver</MudButton>
+                <MudButton OnClick="OpenDialogFinalizar" Variant="Variant.Filled" Color="Color.Primary" Class="rounded-lg" Style="height: 44px; width: 150px;">Finalizar</MudButton>
 
-        }
-        else if(user.Perfil == "Chefe")
-        {
-            <MudButton Variant="Variant.Filled" Color="Color.Success" Class="rounded-lg" Style="height: 44px; width: 150px;">Assinar</MudButton>  
+            }
+            else if (usuarioLogado.Perfil == "Chefe" && ProdFeita.Status == Domain.Enums.StatusProdutividade.AguardandoAssinaturaChefe)
+            {
+                @if (IsBusy)
+                {
+                    <MudProgressCircular Indeterminate="true" Color="Color.Primary" />
+                }
+                else
+                {
+                    <MudButton OnClick="OpenDialogAssinar" Variant="Variant.Filled" Color="Color.Success" Class="rounded-lg" Style="height: 44px; width: 150px;">Assinar</MudButton>
+                }
+            }
         }
     </MudContainer>
 </MudContainer>
 <br>
 <MudPaper MinHeight="350px" Width="100%" Class="py-12 px-6">
+    <MudText Typo="Typo.subtitle2" Class="ml-12 mt-0"> <b>cod: @ProdFeita.Codigo</b></MudText>
     <MudContainer Class="d-flex" Fixed="true" Style="height: 130px" >
         <MudContainer Style="width=45%;">
-            <MudText Typo="Typo.h6"> <b>@ProdData.NomeUsuario</b></MudText>
-            <MudText Typo="Typo.body2">Matrícula: @ProdData.MatriculaUsuario</MudText>
-            <MudText Typo="Typo.body2">Cargo: @ProdData.CargoUsuario</MudText>
-            <MudText Typo="Typo.body2">Lotação: @ProdData.Lotacao</MudText>
+            <MudText Typo="Typo.h6"> <b>@ProdFeita.NomeUsuario</b></MudText>
+            <MudText Typo="Typo.body2">Matrícula: @ProdFeita.MatriculaUsuario</MudText>
+            <MudText Typo="Typo.body2">Cargo: @ProdFeita.CargoUsuario</MudText>
+            <MudText Typo="Typo.body2">Lotação: @ProdFeita.SetorLotado</MudText>
         </MudContainer>
         <MudContainer Style="width=45%;">
-            <MudText Typo="Typo.h6" Class="d-flex justify-end"><b> @ProdData.Status</b></MudText>
+
+            <MudText Typo="Typo.h6" Class="d-flex justify-end">Status: <b> @ProdFeita.Status</b></MudText>
             <MudStack>
-                <MudText Class="d-flex justify-end"><b>Período:</b> @ProdData.DataInicio.ToString("dd/MM/yyyy") à @ProdData.DataFim.ToString("dd/MM/yyyy")</MudText>
-                <MudText Typo="Typo.h6" Class="d-flex justify-end"> <b> @(Atividades.Sum(x => x.Quantidade * x.Peso)) Pontos</b></MudText>
+                <MudText Class="d-flex justify-end"><b>Período:</b> @ProdFeita.DataInicio.ToString("dd/MM/yyyy") à @ProdFeita.DataFim.ToString("dd/MM/yyyy")</MudText>
+                <MudText Typo="Typo.h6" Class="d-flex justify-end"> <b> @(Atividades.Sum(x => x.Qtd * x.Pontuacao)) Pontos</b></MudText>
             </MudStack>
         </MudContainer>
     </MudContainer>
     <MudContainer Fixed="true" Style="min-height: 80px">
-        <MudTable T="AtividadeParaPontuar" Items="@Atividades" Hover="true" Breakpoint="Breakpoint.Sm" @ref="mudTable">
+        <MudTable T="AtividadePontuadaWebDTO" Items="@Atividades" Hover="true" Breakpoint="Breakpoint.Sm">
             <HeaderContent>
                 <MudTh>nº</MudTh>
                 <MudTh>Descrição da Atividade</MudTh>
@@ -55,50 +80,58 @@
                 <MudTh>Subtotal</MudTh>
             </HeaderContent>
             <RowTemplate>
-                <MudTd DataLabel="nº">@context.Number</MudTd>
+                <MudTd DataLabel="nº">@context.Numero</MudTd>
                 <MudTd DataLabel="Descrição da Atividade">@context.Descricao</MudTd>
-                <MudTd DataLabel="Peso" Style="text-align: center">@context.Peso</MudTd>
-                <MudTd DataLabel="Quantidade" Style="text-align: center">@context.Quantidade</MudTd>
-                <MudTd DataLabel="Subtotal" Style="text-align: end">@(context.Quantidade * context.Peso) </MudTd>
+                <MudTd DataLabel="Peso" Style="text-align: center">@context.Pontuacao</MudTd>
+                <MudTd DataLabel="Quantidade" Style="text-align: center">@context.Qtd</MudTd>
+                <MudTd DataLabel="Subtotal" Style="text-align: end">@(context.Qtd * context.Pontuacao) </MudTd>
             </RowTemplate>
         </MudTable>
+        <br>
+        <MudText Typo="Typo.h6" Class="d-flex justify-start">Assinaturas</MudText>
+        <MudTable T="AssinaturaDTO" Items="@Assinaturas" Hover="true" Breakpoint="Breakpoint.Sm">
+            <HeaderContent>
+                <MudTh>Nome</MudTh>
+                <MudTh>Cargo</MudTh>
+                <MudTh>Data da assinatura</MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd DataLabel="nº">@context.NomeAssinante</MudTd>
+                <MudTd DataLabel="Descrição da Atividade">@context.CargoAssinante</MudTd>
+                <MudTd DataLabel="Peso" Style="text-align: center">@context.DataAssinatura</MudTd>
+            </RowTemplate>
+        </MudTable>
+        <br>
+        <MudContainer Class="d-flex align-center" Fixed="true" Style="min-height: 80px">
+            <MudContainer Class="d-flex justify-end gap-4" Style="width: 40%">
+                @if (usuarioLogado != null)
+                {
+                    @if (usuarioLogado.Perfil == "Chefe" && ProdFeita.Status == Domain.Enums.StatusProdutividade.AguardandoAssinaturaChefe)
+                    {
+
+                                <MudIcon Class="d-flex align-center" Color="Color.Error" Icon="@Icons.Material.Filled.SubdirectoryArrowRight" Size="Size.Large" />
+           
+                            <MudSelect @bind-Value="selectedPercentual" T="int" Label="Percentual a receber" Variant="Variant.Outlined" Required="true">
+                                <MudSelectItem T="int" Value="00" Disabled>Selecionar</MudSelectItem>
+                                @foreach (var valor in percentualValues)
+                                {
+                                    <MudSelectItem Value="@valor">@valor %</MudSelectItem>
+                                }
+                            </MudSelect>
+                    }
+                }
+                @if (ProdFeita.Status == Domain.Enums.StatusProdutividade.Devolvida)
+                {
+
+                    <MudAlert Severity="Severity.Error" Style="width: 100%">
+                        <MudText Typo="Typo.subtitle2"> Motivo da devolução</MudText>
+                        <MudText Typo="Typo.subtitle1"> @ProdFeita.Observacao </MudText>
+                    </MudAlert>
+                }
+            </MudContainer>
+            <MudContainer Style="width: 50%">   
+                <MudText Typo="Typo.h6" Class="d-flex justify-end"><b>Valor da produtividade: R$ @ProdFeita.ValorDaProdutividade</b></MudText>
+            </MudContainer>
+        </MudContainer>
     </MudContainer>
 </MudPaper>
-
-@code {
-    private UsuarioDto user;
-    private MudTable<AtividadeParaPontuar> mudTable;
-    private static IEnumerable<AtividadeParaPontuar> Atividades = new List<AtividadeParaPontuar>()
-    {
-        new AtividadeParaPontuar()
-        {
-            Number = 1,
-            Descricao = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-            Peso = 3,
-            Quantidade = 5,
-        },
-        new AtividadeParaPontuar()
-        {
-            Number = 2,
-            Descricao = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-            Peso = 3,
-            Quantidade = 10,
-        },
-        new AtividadeParaPontuar()
-        {
-            Number = 3,
-            Descricao = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-            Peso = 3,
-            Quantidade = 10,
-        },
-        
-
-    };
-    protected override async Task OnInitializedAsync()
-    {
-
-        user = await authHandler.GetUserAsync();
-
-    }
-    private int TotalPts = Atividades.Sum(x => x.Quantidade * x.Peso);
-}

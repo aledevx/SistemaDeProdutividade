@@ -29,12 +29,12 @@
 
 
 @code {
-    private UsuarioDto user;
+    private UsuarioDto? user;
     protected async void RedirectTo()
     {
         user = await Handler.GetUserAsync();
 
-        if (string.IsNullOrEmpty(user.Cpf))
+        if (string.IsNullOrEmpty(user?.Cpf))
         {
             Navigation.NavigateTo("/login");
         }

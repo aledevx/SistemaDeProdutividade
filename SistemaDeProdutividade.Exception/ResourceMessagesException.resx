@@ -117,11 +117,23 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ATIVIDADE_NOT_NULL" xml:space="preserve">
+    <value>É necessário informar as Atividades responsáveis desta produtividade.</value>
+  </data>
+  <data name="CARGO_ALREADY_REGISTERED" xml:space="preserve">
+    <value>Já existe um mapa de produtividade cadastrado com esse Cargo.</value>
+  </data>
+  <data name="CARGO_NOT_FOUND" xml:space="preserve">
+    <value>O cargo informado não está cadastrado em nosso banco de dados.</value>
+  </data>
   <data name="CPF_ALREADY_REGISTERED" xml:space="preserve">
     <value>Este CPF já está cadastrado no sistema.</value>
   </data>
   <data name="CPF_INVALID" xml:space="preserve">
     <value>O CPF inválido.</value>
+  </data>
+  <data name="LOTACAO_NOT_FOUND" xml:space="preserve">
+    <value>O usuário não está lotado em nenhum setor.</value>
   </data>
   <data name="NAME_EMPTY" xml:space="preserve">
     <value>O nome não pode estar vazio.</value>
@@ -129,8 +141,23 @@
   <data name="NOT_FOUND" xml:space="preserve">
     <value>Objeto não encontrado.</value>
   </data>
+  <data name="PERFIL_INVALID" xml:space="preserve">
+    <value>O perfil fornecido não existe em nosso sistema.</value>
+  </data>
+  <data name="PERIOD_INVALID" xml:space="preserve">
+    <value>O periodo informado é inválido, pois está sobrepondo o período de uma produtividade já cadastrada.</value>
+  </data>
   <data name="REGISTRATION_EMPTY" xml:space="preserve">
     <value>A matrícula não pode estar vazia.</value>
+  </data>
+  <data name="SETOR_ALREADY_REGISTERED" xml:space="preserve">
+    <value>Já existe um setor cadastrado com esse nome.</value>
+  </data>
+  <data name="SETOR_NOT_FOUND" xml:space="preserve">
+    <value>O setor informado não está cadastrado em nosso banco de dados.</value>
+  </data>
+  <data name="TIPO_SETOR_NOT_NULL_OR_EMPTY" xml:space="preserve">
+    <value>É necessário selecionar o tipo do setor.</value>
   </data>
   <data name="UNKNOWN_ERROR" xml:space="preserve">
     <value>Error desconhecido.</value>
@@ -140,5 +167,8 @@
   </data>
   <data name="USER_UNAUTHORIZED" xml:space="preserve">
     <value>Usuário sem autorização para executar essa ação.</value>
+  </data>
+  <data name="VALOR_PROD_INVALID" xml:space="preserve">
+    <value>Insira um valor válido para a produtividade.</value>
   </data>
 </root>

@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Components;
 using MudBlazor;
+using SistemaDeProdutividade.Communication.Enums;
+using SistemaDeProdutividade.Communication.Requests.Setores;
+using SistemaDeProdutividade.Communication.Responses;
+using SistemaDeProdutividade.Communication.ViewModel.Setores;
 using SistemaDeProdutividade.Web.Handlers;
-using SistemaDeProdutividade.Web.Models.Setores;
-using SistemaDeProdutividade.Web.Requests;
-using SistemaDeProdutividade.Web.Requests.Setores;
 
 namespace SistemaDeProdutividade.Web.Pages;
 
@@ -11,16 +12,17 @@ public partial class CadastrarSetorPage : ComponentBase
 {
     #region Properties
     public bool IsBusy { get; set; } = false;
-    public CadastrarSetorRequestJson InputModel { get; set; } = new();
-    public string[] tipoSetor = { "Coordenadoria", "Assessoria", "Gerência" };
-
+    public string nomeSetor { get; set; } = string.Empty;
+    public Guid? SetorSuperiorId { get; set; }
+    public TipoSetor tipoSetor { get; set; }
+    public List<SetorIndexVM> Setores { get; set; } = [];
 
     #endregion
 
     #region Services
 
     [Inject]
-    public UsuarioHandler Handler { get; set; } = null!;
+    public SetorHandler Handler { get; set; } = null!;
     [Inject]
     public NavigationManager NavigationManager { get; set; } = null!;
     [Inject]
@@ -36,16 +38,21 @@ public partial class CadastrarSetorPage : ComponentBase
 
         try
         {
-            //var result = await Handler.CadastrarAsync(InputModel);
-            //if (result.IsSuccess)
-            //{
-            //    Snackbar.Add("Usuário cadastrado com sucesso", Severity.Success);
-            //    NavigationManager.NavigateTo("/usuarios");
-            //}
-            //else
-            //{
-            //    Snackbar.Add(result.Message, Severity.Error);
-            //}
+            var request = new CadastrarSetorRequestJson(nomeSetor, tipoSetor, SetorSuperiorId);
+            var response = await Handler.CadastrarAsync(request);
+            if (response.IsSuccess)
+            {
+                Snackbar.Add(response.Message, Severity.Success);
+                NavigationManager.NavigateTo("/setores");
+            }
+            else
+            {
+                var errors = response.Data as ListErrorsResponseJson;
+                foreach (var error in errors!.Errors)
+                {
+                    Snackbar.Add(error, Severity.Error);
+                }
+            }
         }
         catch (Exception ex)
         {
@@ -54,6 +61,22 @@ public partial class CadastrarSetorPage : ComponentBase
         finally
         {
             IsBusy = false;
+        }
+    }
+    protected override async Task OnInitializedAsync()
+    {
+
+        try
+        {
+            var result = await Handler.BuscarTodos();
+            if (result.IsSuccess)
+            {
+                Setores = result.Data!.Setores;
+            }
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add(ex.Message, Severity.Error);
         }
     }
 

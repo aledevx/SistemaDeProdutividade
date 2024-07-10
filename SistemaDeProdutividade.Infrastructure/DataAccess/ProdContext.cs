@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using SistemaDeProdutividade.Communication.Enums;
 using SistemaDeProdutividade.Domain.Constants;
 using SistemaDeProdutividade.Domain.Entities;
 using SistemaDeProdutividade.Domain.Enums;
@@ -64,8 +65,10 @@ public class ProdContext : DbContext
         builder.Entity<ProdutividadeFeita>().Property(p => p.MatriculaUsuario).IsUnicode(false).HasMaxLength(20).IsRequired();
         builder.Entity<ProdutividadeFeita>().Property(p => p.CargoUsuario).IsUnicode(false).HasMaxLength(150).IsRequired();
         builder.Entity<ProdutividadeFeita>().Property(p => p.SetorLotado).IsUnicode(false).HasMaxLength(250).IsRequired();
+        builder.Entity<ProdutividadeFeita>().Property(p => p.ValorDaProdutividade).HasColumnType("decimal(10,2)").IsRequired();
         builder.Entity<ProdutividadeFeita>().Property(p => p.DataInicio).IsRequired();
         builder.Entity<ProdutividadeFeita>().Property(p => p.DataFim).IsRequired();
+        builder.Entity<ProdutividadeFeita>().Property(p => p.Observacao).HasMaxLength(255);
         builder.Entity<ProdutividadeFeita>().HasOne(p => p.Usuario).WithMany(u => u.Produtividades);
         builder.Entity<ProdutividadeFeita>().Property(p => p.UsuarioId).IsRequired();
         builder.Entity<ProdutividadeFeita>().Property(p => p.DataCriacao).IsRequired();

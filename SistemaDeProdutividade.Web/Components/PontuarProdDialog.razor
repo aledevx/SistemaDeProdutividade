@@ -1,0 +1,30 @@
+﻿@inject IDialogService DialogService
+
+<MudDialog Style="height: 400px; padding: 10px;">
+    <DialogContent>
+        <MudText Style="white-space: pre-wrap;">
+            Antes de prosseguir, por favor, verifique cuidadosamente as informações de produtividade que você está prestes a enviar. É de extrema importância que todos os dados fornecidos sejam precisos e verdadeiros.
+
+            Ao clicar no botão 'Confirmar', você estará atestando a veracidade das informações fornecidas, assumindo a responsabilidade por sua exatidão, e concordando com a coleta dos dados 'Nome' e 'Cargo' para assinatura. As informações enviadas terão um impacto direto nas avaliações de desempenho e relatórios gerenciais. Por favor, certifique-se de que todas as entradas estejam corretas antes de confirmar.
+        </MudText> 
+    </DialogContent>
+    <DialogActions>
+        <MudButton Variant="Variant.Outlined" Color="Color.Error" Class="rounded-lg" OnClick="@Cancel">Cancelar</MudButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="rounded-lg" OnClick="@Accept">Confirmar</MudButton>
+    </DialogActions>
+</MudDialog>
+
+
+@code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+
+    private void Accept()
+    {
+        MudDialog.Close(DialogResult.Ok(true));
+    }
+
+    private void Cancel()
+    {
+        MudDialog.Cancel();
+    }
+}

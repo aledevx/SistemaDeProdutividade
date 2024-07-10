@@ -13,53 +13,46 @@
 
     <MudContainer MaxWidth="MaxWidth.Medium" Class="d-flex align-center justify-end gap-4">
         <MudButton Variant="Variant.Outlined" Color="Color.Primary" Class="rounded-lg" Style="height: 44px; width: 150px;">Cancelar</MudButton>
-        <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="rounded-lg" Style="height: 44px; width: 150px;">Salvar</MudButton>
+        @if (IsBusy)
+        {
+            <MudProgressCircular Indeterminate="true" Color="Color.Primary" />
+        }
+        else
+        {
+            <MudButton ButtonType="ButtonType.Submit" OnClick="OnValidSubmitAsync" Variant="Variant.Filled" Color="Color.Primary" Class="rounded-lg" Style="height: 44px; width: 150px;">Salvar</MudButton>
+        }
       </MudContainer>
 </MudContainer>
 <br>
 <MudPaper MinHeight="650px" Width="100%" Class="py-12 px-6">
-    <MudForm >
-        <MudTextField T="string" Variant="Variant.Outlined" Label="Nome do(a) Servidor(a)" Required="true" RequiredError="Name is required!" />
+        <MudTextField T="string" @bind-Value="nomeUsuario" Variant="Variant.Outlined" Label="Nome do(a) Servidor(a)" Required="true" RequiredError="Name is required!" />
         <br/>
-        <MudTextField T="string" Variant="Variant.Outlined" Label="CPF" Required="true" RequiredError="Cpf is required!" Style="width: 25%;" />
+    <MudTextField T="string" @bind-Value="cpf" Variant="Variant.Outlined" Label="CPF" Required="true" RequiredError="Cpf is required!" InputType="InputType.Text" Pattern="[0-9]{11}$" MaxLength="11" Style="width: 25%;" />
         <br />
-        <MudTextField T="string" Variant="Variant.Outlined" Label="Matricula" Required="true" RequiredError="Matricula is required!" Style="width: 25%;" />
+    <MudTextField T="string" @bind-Value="matricula" Variant="Variant.Outlined" Label="Matricula" Required="true" RequiredError="Matricula is required!" Style="width: 25%;" />
         <br />
-        <MudSelect @bind-Value="formModel.Cargo" Label="Cargo" Variant="Variant.Outlined" Style="width: 50%;" Required="true">
-            @foreach (var cargo in cargos)
-            {
-                <MudSelectItem Value="@cargo">@cargo</MudSelectItem>
-            }
-        </MudSelect>
-        <br />
-        <MudSelect @bind-Value="formModel.Setor" Label="Setor" Variant="Variant.Outlined" Required="true" Style="width: 40%;">
-            @foreach (var setor in setores)
-            {
-                <MudSelectItem Value="@setor">@setor</MudSelectItem>
-            }
-        </MudSelect>
-    </MudForm>
+    <MudSelect @bind-Value="CargoId" Label="Cargo" Variant="Variant.Outlined" Style="width: 50%;" Required="true" RequiredError="Selecione o Cargo">
+        <MudSelectItem T="Guid" Value="Guid.Empty">Selecionar</MudSelectItem>
+        @foreach (var cargo in Cargos)
+        {
+            <MudSelectItem T="Guid" Value="@cargo.Id">@cargo.Nome</MudSelectItem>
+        }
+    </MudSelect>
+    <br />
+    <MudSelect @bind-Value="SetorId" Label="Setor" Variant="Variant.Outlined" Required="true" RequiredError="Selecione o Setor" Style="width: 40%;">
+    <MudSelectItem T="Guid" Value="Guid.Empty">Selecionar</MudSelectItem>
+        @foreach (var setor in Setores)
+        {
+            <MudSelectItem T="Guid" Value="@setor.Id">@setor.Nome</MudSelectItem>
+        }
+    </MudSelect>
+    <br/>
+    <MudSelect @bind-Value="perfilSelected" Label="Perfil" Variant="Variant.Outlined" Style="width: 50%;" Required="true">
+    <MudSelectItem T="string" Value="String.Empty">Selecionar</MudSelectItem>
+        @foreach (var perfil in perfis)
+        {
+            <MudSelectItem Value="@perfil">@perfil</MudSelectItem>
+        }
+    </MudSelect>
 </MudPaper>
 
-@code {
-    private MudForm form;
-    private FormModel formModel = new FormModel();
-
-    private string[] cargos = { "Programador", "Gerente", "Coordenador" };
-    private string[] setores = { "Gerência de Tecnologia da Informação", "Gerência de Recursos Humanos", "Gabinete" };
-
-    private void OnValidSubmit()
-    {
-        // Handle the form submission here
-        Console.WriteLine("Formulário válido. Nome: " + formModel.Nome);
-    }
-
-    public class FormModel
-    {
-        public string Nome { get; set; }
-        public string Cpf { get; set; }
-        public string Matricula { get; set; }
-        public string Cargo { get; set; }
-        public string Setor { get; set; }
-    }
-}

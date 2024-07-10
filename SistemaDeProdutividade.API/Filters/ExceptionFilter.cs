@@ -39,6 +39,6 @@ public class ExceptionFilter : IExceptionFilter
     private void ThrowUnknowException(ExceptionContext context)
     {
             context.HttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-            context.Result = new ObjectResult(new ErrorResponseJson(ResourceMessagesException.UNKNOWN_ERROR));
+            context.Result = new ObjectResult(new ErrorResponseJson(context.Exception.Message));
     }
 }

@@ -1,9 +1,6 @@
 ﻿@page "/produtividades/mapas"
-@using System.Net.Http.Json
-@using SistemaDeProdutividade.Web.Models
-@using SistemaDeProdutividade.Web.Models.Produtividades
-@using SistemaDeProdutividade.Web.Models.Setores
-@inject NavigationManager Navigation
+@using SistemaDeProdutividade.Communication.Responses.Produtividades
+@using SistemaDeProdutividade.Communication.ViewModel.Produtividades
 @inherits MapasProdPage
 
 <PageTitle>Mapas de produtividades</PageTitle>
@@ -22,57 +19,25 @@
 </MudContainer>
 <br>
 <MudPaper MinHeight="350px" Width="100%" Class="py-12 px-6">
-    <MudTable Items="@MapasProd" Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped" Filter="new Func<MapaProdIndex,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
+    <MudTable Items="@Mapas" T="MapaProdIndexVM" Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped" Filter="new Func<MapaProdIndexVM,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
         <ToolBarContent>
             <MudText Typo="Typo.h6">Mapas de Produtividades Cadastradas</MudText>
             <MudSpacer />
             <MudTextField @bind-Value="searchString1" Placeholder="Buscar" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
         </ToolBarContent>
         <HeaderContent>
-            <MudTh>Nº</MudTh>
-            <MudTh>Nome</MudTh>
+            <MudTh>Cargo</MudTh>
+            <MudTh>Valor</MudTh>
             <MudTh></MudTh>
         </HeaderContent>
         <RowTemplate>
-            <MudTd DataLabel="Nº">@context.Id</MudTd>
-            <MudTd DataLabel="Nome">@context.Nome</MudTd>
-            <MudTd><MudButton Variant="Variant.Filled" Size="Size.Small" Color="Color.Tertiary" OnClick="() => NavigateToProfile()">Visualizar</MudButton></MudTd>
-            </RowTemplate>
+            <MudTd DataLabel="Cargo">@context.Cargo</MudTd>
+            <MudTd DataLabel="Valor">@context.ValorProd</MudTd>
+            <MudTd><MudButton Variant="Variant.Filled" Class="cursor-not-allowed" Size="Size.Small" Color="Color.Tertiary" OnClick="() => NavigateToProfile(context.Id)" Disabled>Visualizar</MudButton></MudTd>
+        </RowTemplate>
         <PagerContent>
             <MudTablePager />
         </PagerContent>
     </MudTable>
 
 </MudPaper>
-@code {
-    private bool dense = false;
-    private bool hover = true;
-    private bool striped = false;
-    private bool bordered = false;
-    private string searchString1 = "";
-    private MapaProdIndex selectedItem1 = null;
-    private HashSet<MapaProdIndex> selectedItems = new HashSet<MapaProdIndex>();
-
-    private IEnumerable<MapaProdIndex> MapasProd = new List<MapaProdIndex>()
-    {
-        new MapaProdIndex(Guid.NewGuid(), "Gerente de Tecnologia da Informação"),
-        new MapaProdIndex(Guid.NewGuid(), "Assessor V"),
-        new MapaProdIndex(Guid.NewGuid(), "Chefe de Núcleo de Programação")
-    };
-
-    private bool FilterFunc1(MapaProdIndex mapa) => FilterFunc(mapa, searchString1);
-
-    private void NavigateToProfile()
-    {
-        Navigation.NavigateTo($"/produtividades/mapas/visualizar");
-    }
-
-    private bool FilterFunc(MapaProdIndex mapa, string searchString)
-    {
-        if (string.IsNullOrWhiteSpace(searchString))
-            return true;
-        if (mapa.Nome.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-            return true;
-        return false;
-    }
-    }
