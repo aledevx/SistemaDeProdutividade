@@ -40,7 +40,7 @@ public class VisualizarSetorUseCase : IVisualizarSetorUseCase
 
         var usersIdLotadoSetor = lotacoesDoSetor.Select(l => l.UsuarioId).Distinct().ToList();
 
-        foreach (var item in usersIdLotadoSetor) 
+        foreach (var item in usersIdLotadoSetor.ToList()) 
         {
             var usuario = await _usuarioReadOnlyRepository.BuscarPerfilCompletoSemProd(item);
             result.AddUsuario(new IndexUsuarioSetorVM(usuario.Id, usuario.Nome, usuario.Cargo, usuario.Matricula));

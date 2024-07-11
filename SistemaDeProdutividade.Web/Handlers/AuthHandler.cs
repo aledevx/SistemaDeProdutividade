@@ -18,7 +18,7 @@ public class AuthHandler
         _client = client;
         _jsRuntime = jsRuntime;
     }
-    public async Task<Response<LoginResponseJson>> LoginAsync(LoginRequestJson request) 
+    public async Task<Response<UsuarioResponseJson>> LoginAsync(LoginRequestJson request) 
     {
         await DeleteCoookie();
 
@@ -26,7 +26,7 @@ public class AuthHandler
 
         if (response.IsSuccessStatusCode)
         {
-            var user = await response.Content.ReadFromJsonAsync<Response<LoginResponseJson>>();
+            var user = await response.Content.ReadFromJsonAsync<Response<UsuarioResponseJson>>();
 
             var nameParts = user!.Data!.Nome.Split(' ');
             var firstName = nameParts.First();
@@ -34,16 +34,17 @@ public class AuthHandler
 
             var cookieOptions = new CookieOptions { Expires = DateTime.Now.AddDays(1) };
 
+            await _jsRuntime.InvokeVoidAsync("blazorExtensions.writeCookie", "Id", user.Data.Id.ToString(), cookieOptions.Expires);
             await _jsRuntime.InvokeVoidAsync("blazorExtensions.writeCookie", "FirstName", firstName, cookieOptions.Expires);
             await _jsRuntime.InvokeVoidAsync("blazorExtensions.writeCookie", "LastName", lastName, cookieOptions.Expires);
             await _jsRuntime.InvokeVoidAsync("blazorExtensions.writeCookie", "Cpf", user.Data.Cpf, cookieOptions.Expires);
             await _jsRuntime.InvokeVoidAsync("blazorExtensions.writeCookie", "Perfil", user.Data.Perfil, cookieOptions.Expires);
 
 
-            return new Response<LoginResponseJson>(null, 200, user.Message);
+            return new Response<UsuarioResponseJson>(null, 200, user.Message);
         }
 
-        return new Response<LoginResponseJson>(null, 400, "Erro ao efetuar login");
+        return new Response<UsuarioResponseJson>(null, 400, "Erro ao efetuar login");
     }
     public async Task<bool> LogoutAsync()
     {
@@ -65,6 +66,7 @@ public class AuthHandler
         //TRATAR CASO VENHA NULL
         if (string.IsNullOrEmpty(result))
         {
+            userDto.Id = Guid.Empty;
             userDto.FirstName = "";
             userDto.LastName = "";
             userDto.Perfil = "";
@@ -83,6 +85,12 @@ public class AuthHandler
 
                 switch (key)
                 {
+                    case "Id":
+                        if (Guid.TryParse(value, out Guid idToGuid))
+                        {
+                            userDto.Id = idToGuid;
+                        } 
+                        break;
                     case "FirstName":
                         userDto.FirstName = value;
                         break;
@@ -120,6 +128,7 @@ public class AuthHandler
     }
     public async Task DeleteCoookie() 
     {
+        await _jsRuntime.InvokeVoidAsync("blazorExtensions.deleteCookie", "Id");
         await _jsRuntime.InvokeVoidAsync("blazorExtensions.deleteCookie", "FirstName");
         await _jsRuntime.InvokeVoidAsync("blazorExtensions.deleteCookie", "LastName");
         await _jsRuntime.InvokeVoidAsync("blazorExtensions.deleteCookie", "Cpf");

@@ -24,7 +24,7 @@ public class ProdutividadeFeita
     public bool Ativo { get; set; } = true;
     public decimal ValorDaProdutividade { get; set; }
     public bool SemAssinaturaServidor { get; set; } = false; //PARA CASO O SERVIDOR ESTEJA DE FÉRIAS
-    public string Observacao { get; private set; }
+    public string? Observacao { get; set; } = string.Empty;
     public List<Assinatura> Assinaturas { get; set; } = [];
     public List<AtividadePontuada> Atividades { get; set; } = [];
     public List<HistoricoMovimentacaoProd> Historico { get; set; } = [];

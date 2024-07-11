@@ -49,8 +49,6 @@ public class CadastrarProdutividadePontuadaUseCase : ICadastrarProdutividadePont
 
         await _prodWriteOnlyRepository.AddProd(prodFeita);
 
-        var existProdFeita = await _prodReadOnlyRepository.ExisteProdFeita(prodFeita.Id);
-
         return new MensagemSucessoCadastroResponseJson("Produtividade pontuada com sucesso");
 
     }
