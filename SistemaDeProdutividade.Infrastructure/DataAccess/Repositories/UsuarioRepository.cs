@@ -207,4 +207,10 @@ public class UsuarioRepository : IUsuarioWriteOnlyRepository, IUsuarioReadOnlyRe
 
         return result;
     }
+
+    public async Task<Usuario> BuscarUsuarioPorId(Guid userId)
+    {
+        var result = await _dbContext.Usuarios.FirstAsync(u => u.Id == userId);
+        return result;
+    }
 }

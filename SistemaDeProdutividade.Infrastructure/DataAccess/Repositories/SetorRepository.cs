@@ -23,6 +23,7 @@ public class SetorRepository : ISetorReadOnlyRepository, ISetorWriteOnlyReposito
     {
         var setor = await BuscarSetor(setorId);
 
+        setor.ChefeId = usuario.Id;
         setor.AddChefe(usuario);
     }
 

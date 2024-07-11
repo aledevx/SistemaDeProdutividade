@@ -15,6 +15,8 @@ public partial class LotacaoUsuarioPage : ComponentBase
 {
     #region Properties
     public bool IsBusy { get; set; } = false;
+    public string[] perfis = { "Servidor", "Chefe", "Admin" };
+    public string perfilSelected { get; set; } = string.Empty;
     [Parameter] public Guid Id { get; set; }
     public string Cpf { get; set; } = string.Empty;
     public string MatriculaUsuario { get; set; } = string.Empty;
@@ -53,7 +55,7 @@ public partial class LotacaoUsuarioPage : ComponentBase
 
         try
         {
-            var request = new LotarUsuarioRequestJson(SetorId, CargoId, usuarioLogado!.Cpf);
+            var request = new LotarUsuarioRequestJson(SetorId, CargoId, usuarioLogado!.Cpf, perfilSelected);
             var response = await UserHandler.LotarAsync(Id, request);
             if (response.IsSuccess)
             {

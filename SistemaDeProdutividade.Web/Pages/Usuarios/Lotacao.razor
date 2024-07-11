@@ -53,5 +53,13 @@
     </MudSelect>
     
     <br/>
+    <MudSelect @bind-Value="perfilSelected" Label="Perfil" Variant="Variant.Outlined" Style="width: 50%;" Required="true">
+        <MudSelectItem T="string" Value="String.Empty">Selecionar</MudSelectItem>
+        @foreach (var perfil in perfis)
+        {
+            <MudSelectItem Value="@perfil">@perfil</MudSelectItem>
+        }
+    </MudSelect>
+    <br />
 </MudPaper>
 

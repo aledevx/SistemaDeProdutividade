@@ -1,5 +1,6 @@
 ﻿using SistemaDeProdutividade.Communication.Requests.Usuarios;
 using SistemaDeProdutividade.Communication.Responses;
+using SistemaDeProdutividade.Domain.Constants;
 using SistemaDeProdutividade.Domain.Contracts;
 using SistemaDeProdutividade.Domain.Repositories.Produtividade;
 using SistemaDeProdutividade.Domain.Repositories.Setor;
@@ -14,17 +15,20 @@ public class LotarUsuarioUseCase : ILotarUsuarioUseCase
     private readonly IUsuarioReadOnlyRepository _usuarioReadOnlyRepository;
     private readonly IRequestEntityMapperService _mapperService;
     private readonly ISetorReadOnlyRepository _setorReadOnlyRespository;
+    private readonly ISetorWriteOnlyRepository _setorWriteOnlyRepository;
     private readonly IProdutividadeReadOnlyRepository _produtividadeReadOnlyRepository;
     public LotarUsuarioUseCase(IUsuarioWriteOnlyRepository writeOnlyRepository,
         IUsuarioReadOnlyRepository readOnlyRepository,
         IRequestEntityMapperService mapperService,
         ISetorReadOnlyRepository setorReadOnlyRepository,
+        ISetorWriteOnlyRepository setorWriteOnlyRepository,
         IProdutividadeReadOnlyRepository produtividadeReadOnlyRepository)
     {
         _usuarioWriteOnlyRepository = writeOnlyRepository;
         _usuarioReadOnlyRepository = readOnlyRepository;
         _mapperService = mapperService;
         _setorReadOnlyRespository = setorReadOnlyRepository;
+        _setorWriteOnlyRepository = setorWriteOnlyRepository;
         _produtividadeReadOnlyRepository = produtividadeReadOnlyRepository;
     }
     public async Task<MensagemSucessoCadastroResponseJson> Execute(Guid id,LotarUsuarioRequestJson request)
@@ -33,6 +37,12 @@ public class LotarUsuarioUseCase : ILotarUsuarioUseCase
 
         var idUserLogado = _usuarioReadOnlyRepository.BuscarIdUsuario(request.cpfUsuarioLogado);
         var mapToLotacao = _mapperService.MappingToLotacao(id, request.SetorId, request.CargoId, idUserLogado);
+
+        if (request.Perfil == Perfil.Chefe) 
+        {
+            var usuario = _usuarioReadOnlyRepository.BuscarUsuarioPorId(id).Result;
+            _setorWriteOnlyRepository.AddChefeSetor(usuario, request.SetorId);
+        }
 
         await _usuarioWriteOnlyRepository.LotarUsuario(mapToLotacao);
 

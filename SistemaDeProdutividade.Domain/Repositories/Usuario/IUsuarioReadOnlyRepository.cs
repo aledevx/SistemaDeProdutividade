@@ -23,5 +23,6 @@ public interface IUsuarioReadOnlyRepository
     Task<LotacaoAtualUsuarioResponseJson> LotacaoAtual(Guid userId);
     Task<Lotacao> LotacaoAtualComIds(Guid userId);
     Task<List<Lotacao>> Lotacoes();
+    Task<Entities.Usuario> BuscarUsuarioPorId(Guid userId);
 
 }
