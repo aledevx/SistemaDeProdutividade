@@ -25,7 +25,7 @@ public class VisualizarSetorUseCase : IVisualizarSetorUseCase
 
         var lotacoesDoSetor = lotacoes.Where(l => l.SetorId == setor.Id).ToList();
 
-        foreach (var lotSetor in lotacoesDoSetor) 
+        foreach (var lotSetor in lotacoesDoSetor.ToList()) 
         {
             for (int x =0; x<= lotacoes.Count() -1; x++) 
             {
