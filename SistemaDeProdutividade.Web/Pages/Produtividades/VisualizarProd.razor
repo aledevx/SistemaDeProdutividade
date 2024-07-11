@@ -12,8 +12,7 @@
             @if (usuarioLogado != null)
             {
                 @if (usuarioLogado.Perfil == "Admin" &&
-               ProdFeita.Status == Domain.Enums.StatusProdutividade.AguardandoRh &&
-               ProdFeita.UsuarioId != usuarioLogado.Id)
+               ProdFeita.Status == Domain.Enums.StatusProdutividade.AguardandoRh)
                 {
                     <MudText Typo="Typo.body2" Class="px-4 mud-text-secondary">Verifique os dados da produtividade recebida e finalize ou devolva para o usuário caso exista alguma irregularidade</MudText>
                 }
