@@ -14,7 +14,7 @@
      </MudContainer>
 
     <MudContainer MaxWidth="MaxWidth.Medium" Class="d-flex align-center justify-end gap-4">
-        <MudButton Variant="Variant.Outlined" Color="Color.Primary" Class="rounded-lg" Style="height: 44px; width: 150px;">Cancelar</MudButton>
+        <MudButton Variant="Variant.Outlined" OnClick="Voltar" Color="Color.Primary" Class="rounded-lg" Style="height: 44px; width: 150px;">Cancelar</MudButton>
         @if (IsBusy)
         {
             <MudProgressCircular Indeterminate="true" Color="Color.Primary" />

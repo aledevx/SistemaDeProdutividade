@@ -24,6 +24,8 @@ public partial class CadastrarSetorPage : ComponentBase
     [Inject]
     public SetorHandler Handler { get; set; } = null!;
     [Inject]
+    public AuthHandler authHandler { get; set; } = null!;
+    [Inject]
     public NavigationManager NavigationManager { get; set; } = null!;
     [Inject]
     public ISnackbar Snackbar { get; set; } = null!;
@@ -78,6 +80,10 @@ public partial class CadastrarSetorPage : ComponentBase
         {
             Snackbar.Add(ex.Message, Severity.Error);
         }
+    }
+    public async void Voltar()
+    {
+        await authHandler.Voltar();
     }
 
     #endregion

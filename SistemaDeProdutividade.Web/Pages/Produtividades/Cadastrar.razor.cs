@@ -27,6 +27,8 @@ public partial class CadastrarProdutividadePage : ComponentBase
     [Inject]
     public ProdutividadeHandler Handler { get; set; } = null!;
     [Inject]
+    public AuthHandler authHandler { get; set; } = null!;
+    [Inject]
     public NavigationManager NavigationManager { get; set; } = null!;
     [Inject]
     public ISnackbar Snackbar { get; set; } = null!;
@@ -80,6 +82,11 @@ public partial class CadastrarProdutividadePage : ComponentBase
     public void RemoveTask(AtividadeDTO atividade)
     {
         todoAtividades.Remove(atividade);
+    }
+
+    public async void Voltar()
+    {
+        await authHandler.Voltar();
     }
 
     #endregion

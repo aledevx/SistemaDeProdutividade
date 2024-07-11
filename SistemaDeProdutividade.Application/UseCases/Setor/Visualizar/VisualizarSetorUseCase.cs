@@ -38,7 +38,7 @@ public class VisualizarSetorUseCase : IVisualizarSetorUseCase
             }
         }
 
-        var usersIdLotadoSetor = lotacoesDoSetor.Select(l => l.UsuarioId).ToList();
+        var usersIdLotadoSetor = lotacoesDoSetor.Select(l => l.UsuarioId).Distinct().ToList();
 
         foreach (var item in usersIdLotadoSetor) 
         {

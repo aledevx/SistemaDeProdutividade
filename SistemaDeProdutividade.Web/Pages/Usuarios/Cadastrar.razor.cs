@@ -94,6 +94,10 @@ public partial class CadastrarUsuarioPage : ComponentBase
             Snackbar.Add(ex.Message, Severity.Error);
         }
     }
+    public async void Voltar()
+    {
+        await authHandler.Voltar();
+    }
 
     #endregion
 }
