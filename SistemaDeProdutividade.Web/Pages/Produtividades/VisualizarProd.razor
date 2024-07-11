@@ -18,8 +18,7 @@
                     <MudText Typo="Typo.body2" Class="px-4 mud-text-secondary">Verifique os dados da produtividade recebida e finalize ou devolva para o usuário caso exista alguma irregularidade</MudText>
                 }
                 else if (usuarioLogado.Perfil == "Chefe" &&
-                ProdFeita.Status == Domain.Enums.StatusProdutividade.AguardandoAssinaturaChefe &&
-                ProdFeita.UsuarioId != usuarioLogado.Id)
+                ProdFeita.Status == Domain.Enums.StatusProdutividade.AguardandoAssinaturaChefe)
                 {
                     <MudText Typo="Typo.body2" Class="px-4 mud-text-secondary">Verifique os dados da produtividade recebida, <b>informe o percentual a receber</b> pela produtividade no final da página e depois assine a produtividade</MudText>
                 }
@@ -35,13 +34,16 @@
         <MudButton Variant="Variant.Outlined" OnClick="Voltar" Color="Color.Primary" Class="rounded-lg" Style="height: 44px; width: 150px;">Voltar</MudButton>
         @if (usuarioLogado != null)
         {
-            @if (usuarioLogado.Perfil == "Admin" && ProdFeita.Status == Domain.Enums.StatusProdutividade.AguardandoRh)
+            @if (usuarioLogado.Perfil == "Admin" && ProdFeita.Status == Domain.Enums.StatusProdutividade.AguardandoRh &&
+           ProdFeita.UsuarioId != usuarioLogado.Id)
             {
                 <MudButton OnClick="OpenDialogDevolver" Variant="Variant.Filled" Color="Color.Error" Class="rounded-lg" Style="height: 44px; width: 150px;">Devolver</MudButton>
                 <MudButton OnClick="OpenDialogFinalizar" Variant="Variant.Filled" Color="Color.Primary" Class="rounded-lg" Style="height: 44px; width: 150px;">Finalizar</MudButton>
 
             }
-            else if (usuarioLogado.Perfil == "Chefe" && ProdFeita.Status == Domain.Enums.StatusProdutividade.AguardandoAssinaturaChefe)
+            else if (usuarioLogado.Perfil == "Chefe" &&
+            ProdFeita.Status == Domain.Enums.StatusProdutividade.AguardandoAssinaturaChefe &&
+            ProdFeita.UsuarioId != usuarioLogado.Id)
             {
                 @if (IsBusy)
                 {
@@ -110,7 +112,9 @@
             <MudContainer Class="d-flex justify-end gap-4" Style="width: 40%">
                 @if (usuarioLogado != null)
                 {
-                    @if (usuarioLogado.Perfil == "Chefe" && ProdFeita.Status == Domain.Enums.StatusProdutividade.AguardandoAssinaturaChefe)
+                    @if (usuarioLogado.Perfil == "Chefe" &&
+                   ProdFeita.Status == Domain.Enums.StatusProdutividade.AguardandoAssinaturaChefe &&
+                   ProdFeita.UsuarioId != usuarioLogado.Id)
                     {
 
                                 <MudIcon Class="d-flex align-center" Color="Color.Error" Icon="@Icons.Material.Filled.SubdirectoryArrowRight" Size="Size.Large" />
