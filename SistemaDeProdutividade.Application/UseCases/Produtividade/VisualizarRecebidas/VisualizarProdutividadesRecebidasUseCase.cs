@@ -37,7 +37,8 @@ public class VisualizarProdutividadesRecebidasUseCase : IVisualizarProdutividade
             var idsChefesSubordinados = setoresSubordinados.Select(s => s.ChefeId).ToList();
 
             var result = prodsRecebidas.Prods.Where(p => (p.Lotacao.Trim().ToLower() == lotacaoUserLogado.SetorNome.Trim().ToLower() ||
-             idsChefesSubordinados.Contains(p.UsuarioId)) && p.Status == Domain.Enums.StatusProdutividade.AguardandoAssinaturaChefe).Select(p => new ProdFeitaIndexVM(p.Id,
+             idsChefesSubordinados.Contains(p.UsuarioId)) && p.Status == Domain.Enums.StatusProdutividade.AguardandoAssinaturaChefe &&
+             p.UsuarioId != usuario.Id).Select(p => new ProdFeitaIndexVM(p.Id,
              0,
              p.Codigo,
              p.NomeUsuario,
