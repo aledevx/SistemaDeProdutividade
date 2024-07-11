@@ -91,7 +91,6 @@ public class ProdutividadeRepository : IProdutividadeWriteOnlyRepository, IProdu
     public async Task<ProdsFeitasResponseJson> BuscarProdutividadesFeitas()
     {
         var prodsFeitas = await _prodContext.ProdutividadesFeitas
-            .Where(p => p.Ativo)
             .Select(p => new ProdFeitaIndexVM(p.Id,
             0, 
             p.Codigo, 

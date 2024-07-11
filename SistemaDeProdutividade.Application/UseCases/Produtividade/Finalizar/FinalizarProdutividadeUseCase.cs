@@ -31,12 +31,12 @@ public class FinalizarProdutividadeUseCase : IFinalizarProdutividadeUseCase
             {
                 prodFeita.AddObservacao(request.Observacao);
             }
+            prodFeita.Ativo = false;
             prodFeita.Status = Domain.Enums.StatusProdutividade.Devolvida;
         }
         else if (request.status == Domain.Enums.StatusProdutividade.Finalizada)
         {
             prodFeita.Status = Domain.Enums.StatusProdutividade.Finalizada;
-            prodFeita.Ativo = false;
         }
 
         _prodWriteOnlyRepository.UpdateProd(prodFeita);
