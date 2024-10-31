@@ -26,36 +26,36 @@ O CPROD facilita o gerenciamento de produtividades com um fluxo claro e eficient
 
 O projeta utiliza dos princípios e práticas do Domain-Driven Design(DDD) de uma maneira melhorada, modelando o software com base no domínio do problema e adicionando duas camadas extras que são as camadas de **Exceção** e **Comunicação**.
 
-##### Projeto de API
+#### Projeto de API
 
-- Endpoints
+- **Endpoints:** Define os pontos de entrada da aplicação, onde as requisições externas são recebidas e processadas, direcionando-as para os casos de uso adequados.
 
-##### Projeto de Aplicação
+#### Projeto de Aplicação
 
-- Regras de negócio(Validações)
-- Casos de uso
+- **Regras de Negócio e Validações:** Contém toda a lógica de negócio e as validações específicas da aplicação.
+- **Casos de Uso:** Representa as operações centrais da aplicação, organizando as regras e passos necessários para realizar cada funcionalidade principal.
 
-##### Projeto de Comunicação
+#### Projeto de Comunicação
 
-- Classes com propriedades de requisições e respostas para receber e devolver informação (Request e Responses)
+- **Classes de Request e Response:** Contém as classes que definem a estrutura de requisições e respostas, garantindo que os dados enviados e recebidos estejam no formato correto para a API.
 
-##### Projeto de Exceção
+#### Projeto de Exceção
 
-- Exceções customizadas
+- **Exceções Customizadas:** Define exceções específicas para o projeto, permitindo o tratamento de erros de maneira controlada e personalizada.
 
-##### Projeto de Domínio
+#### Projeto de Domínio
 
-- Interfaces/Contratos
-- Entidades
+- **Interfaces e Contratos:** Define os contratos e interfaces que descrevem as operações essenciais do domínio, servindo como uma ponte entre as diferentes camadas.
+- **Entidades:** Representa os objetos de domínio fundamentais, com suas propriedades e comportamentos específicos, encapsulando as regras de negócio relacionadas.
 
-##### Projeto de Infraestrutura
+#### Projeto de Infraestrutura
 
-- Tudo que está externo a API (ex: salvar no banco de dados, enviar e-mail, upload de arquivos, etc..)
+- **Serviços Externos e Persistência:** Contém as implementações para acesso a serviços externos, como bancos de dados, APIs de terceiros, envio de e-mails e upload de arquivos.
 
-##### Projeto Web
+#### Projeto Web
 
-- Toda a interface de interação com o usuário
-- Handlers para consumir o Projeto de API
+- **Interface de Interação com o Usuário:** Define toda a estrutura de interface e os elementos de front-end que permitem a interação com o usuário final.
+- **Handlers para Consumo da API:** Configura os manipuladores necessários para consumir os endpoints da API, integrando a lógica de back-end com a interface de front-end.
 
 ![alt text](image.png)
 
