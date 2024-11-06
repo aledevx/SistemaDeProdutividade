@@ -53,13 +53,13 @@ O projeta utiliza dos princípios e práticas do Domain-Driven Design(DDD) de um
 - **Interface de Interação com o Usuário:** Define toda a estrutura de interface e os elementos de front-end que permitem a interação com o usuário final.
 - **Handlers para Consumo da API:** Configura os manipuladores necessários para consumir os endpoints da API, integrando a lógica de back-end com a interface de front-end.
 
-![alt text](image.png)
+![alt text](/SistemaDeProdutividade.Web/images/image.png)
 
 ### 🔀 Fluxograma da Produtividade
 
 O fluxo de produtividade é simples: o usuário acessa o sistema, seleciona a opção de pontuar produtividade, insere o período e pontua as atividades já associadas ao seu cargo. Após assinar, a produtividade é enviada para o chefe, que informa o percentual à ser recebido pelo usuário e depois assina. Em seguida, a produtividade vai para o Recursos Humanos (Admin), que valida ou devolve para correção, encerrando o processo com a finalização da produtividade validada.
 
-![alt text](image-1.png)
+![alt text](/SistemaDeProdutividade.Web/images/image-1.png)
 
 O CPROD facilita o gerenciamento de produtividades com um fluxo claro e eficiente, garantindo a transparência e controle das atividades realizadas por cada usuário.
 
@@ -137,6 +137,110 @@ VALUES (NEWID(), 'Nome do Usuário', '000000000', '00000000000', 'Admin');
 
 ### 📡 Backend
 
-#### Endpoints
+Neste projeto, a porta padrão utilizada para acessar a API será a **5283**. Caso essa porta não esteja disponível em sua máquina, você pode alterá-la facilmente modificando a propriedade **BackendUrl** no arquivo `Configuration.cs`, localizado em `SistemaDeProdutividade.Application/Configuration.cs`.
+
+A documentação da API é gerada via **Swagger**, onde estão listadas todas as rotas da API, além de informações detalhadas sobre as requisições e respostas disponíveis.
+
+#### Executando o Backend
+
+Na raiz do projeto, abra o prompt de comando e navegue até o diretório SistemaDeProdutividade.API com o comando:
+
+```
+cd SistemaDeProdutividade.API
+```
+
+Em seguida, inicie o projeto com o comando:
+
+```
+dotnet run
+```
+
+O Swagger será aberto automaticamente no navegador, exibindo toda a documentação da API. Se não abrir, acesse manualmente o endereço `http://localhost:5283/swagger/index.html` (a porta pode ser diferente caso tenha sido modificada no arquivo `Configuration.cs`).
+
+![alt text](/SistemaDeProdutividade.Web/images/image-2.png)
 
 ### 🎨 Frontend
+
+O projeto frontend utiliza, por padrão, a porta **5167**. Caso essa porta não esteja disponível, basta alterar a propriedade **FrontendUrl** no arquivo `Configuration.cs`, localizado em `SistemaDeProdutividade.Application/Configuration.cs`. Para assegurar a comunicação com a API, verifique se a propriedade **BackendUrl** no arquivo `WebConfiguration.cs` (localizado em `SistemaDeProdutividade.Web/WebConfiguration.cs`) está configurada com a mesma porta definida anteriormente.
+
+Este é um projeto **Blazor WebAssembly**, permitindo que o código seja executado diretamente no navegador, proporcionando uma experiência de aplicação rica no lado do cliente. O projeto utiliza o **MudBlazor**, uma biblioteca de componentes gratuita que facilita a criação de interfaces modernas e responsivas para aplicações Blazor.
+
+#### Executando o Frontend
+
+Para executar o projeto, abra o prompt de comando na raiz do projeto e acesse o diretório SistemaDeProdutividade.Web com o comando:
+
+```
+cd SistemaDeProdutividade.Web
+```
+
+Em seguida, inicie o projeto com o comando:
+
+```
+dotnet run
+```
+
+Após executar o comando, o navegador será aberto automaticamente exibindo a tela de login. Se isso não ocorrer, acesse manualmente o endereço `http://localhost:5167/login` (lembrando que a porta pode variar caso tenha sido alterada no arquivo `Configuration.cs` e `WebConfiguration.cs`).
+
+#### Tela de Login
+
+![alt text](/SistemaDeProdutividade.Web/images/image-3.png)
+
+O sistema não armazena senhas dos usuários, mantendo apenas os dados necessários para o cadastro. A autenticação é realizada via Active Directory.
+
+#### Tela Inicial
+
+A tela inicial muda de acordo com cada perfil de usuário, pois cada um tem a sua responsabilidade dentro do sistema.
+
+![alt text](/SistemaDeProdutividade.Web/images/image-4.png)
+
+#### Menu Admin
+
+![alt text](/SistemaDeProdutividade.Web/images/image-5.png)
+
+| Menu                    | Descrição                                                                                                |
+| ----------------------- | -------------------------------------------------------------------------------------------------------- |
+| Minhas Informações      | Funcionalidade ainda não implementada.                                                                   |
+| Caixa de Entrada        | Página que exibe todas as produtividades assinadas pelo Servidor e Chefe, aguardando avaliação do Admin. |
+| Produtividades          | Página que lista todas as produtividades registradas no sistema.                                         |
+| Pontuar Produtividade   | Página para pontuar a própria produtividade do usuário.                                                  |
+| Minhas Produtividades   | Página que exibe todas as produtividades realizadas pelo usuário logado.                                 |
+| Usuários                | Página para cadastro e gerenciamento dos usuários no sistema.                                            |
+| Setores                 | Página para cadastro e gerenciamento dos setores.                                                        |
+| Mapas de Produtividades | Página para cadastro e consulta dos mapas de produtividades.                                             |
+| Sair                    | Função para realizar o logout do sistema.                                                                |
+
+#### Menu Chefe
+
+![alt text](/SistemaDeProdutividade.Web/images/image-6.png)
+
+| Menu                  | Descrição                                                                                                                                           |
+| --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Minhas Informações    | Funcionalidade ainda não implementada.                                                                                                              |
+| Caixa de Entrada      | Página que exibe todas as produtividades pontuadas e assinadas pelo Servidor, aguardando a definição do percentual à receber e assinatura do Chefe. |
+| Produtividades        | Página que lista todas as produtividades dos subordinados do Chefe.                                                                                 |
+| Pontuar Produtividade | Página para pontuar a própria produtividade do usuário.                                                                                             |
+| Minhas Produtividades | Página que exibe todas as produtividades realizadas pelo usuário logado.                                                                            |
+| Sair                  | Função para realizar o logout do sistema.                                                                                                           |
+
+#### Menu Servidor
+
+![alt text](/SistemaDeProdutividade.Web/images/image-7.png)
+
+| Menu                  | Descrição                                                                |
+| --------------------- | ------------------------------------------------------------------------ |
+| Minhas Informações    | Funcionalidade ainda não implementada.                                   |
+| Pontuar Produtividade | Página para pontuar a própria produtividade do usuário.                  |
+| Minhas Produtividades | Página que exibe todas as produtividades realizadas pelo usuário logado. |
+| Sair                  | Função para realizar o logout do sistema.                                |
+
+---
+
+### 🚧 Status do projeto
+
+O projeto foi apresentado como Trabalho de Conclusão de Curso (TCC) na faculdade UniSapiens em 11/07/2024. Devido ao tempo limitado e a alguns imprevistos, o sistema passará por refatorações e melhorias, uma vez que certas funcionalidades ainda não foram implementadas e alguns conceitos foram aplicados incorretamente. No entanto, a maior parte do projeto está concluída e ele cumpre a função para a qual foi proposto. Portanto, o projeto não está completamente finalizado.
+
+### 📧 Contato
+
+- [**Linkedin**](https://www.linkedin.com/in/aalexndrz/)
+- **WhatsApp: (69) 9 9323-3480**
+- **Discord**: **aalexndrz**
